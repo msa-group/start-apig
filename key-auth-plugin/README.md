@@ -67,7 +67,7 @@
 ```mermaid
 flowchart TB
 A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
-	B -->|/echo| P1[fa:fa-shield-alt key-auth]
+	B -->|/get| P1[fa:fa-shield-alt key-auth]
 	P1 --> Backend[fa:fa-server FC Service]
 ```
 
