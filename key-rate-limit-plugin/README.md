@@ -41,6 +41,86 @@ A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
 
 > 更多配置详情，请查阅[Github 文档](https://github.com/alibaba/higress/blob/main/plugins/wasm-cpp/extensions/key_rate_limit/README.md)
 
+### 识别请求参数 apikey，进行区别限流
+
+```yaml
+limit_by_param: apikey
+limit_keys:
+  - key: 9a342114-ba8a-11ec-b1bf-00163e1250b5
+    query_per_second: 10
+```
+
+#### usage
+
+1. 发起未经流量管控的请求
+   首先，尝试不带任何流量管控信息发起请求：
+
+```
+curl -iv 'http://env-cu9g82mm1hkui0vcv5eg-cn-hangzhou.alicloudapi.com/get'
+```
+
+预期返回结果：
+
+```
+{
+  "args": {},
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip",
+    "Host": "key-ratgin-fmic-ncdnjmvpru.cn-hangzhou-vpc.fcapp.run:80",
+    "Original-Host": "env-cu9g82mm1hkui0vcv5eg-cn-hangzhou.alicloudapi.com",
+    "Req-Start-Time": "1738828590263",
+    "User-Agent": "curl/7.86.0",
+    "X-Ca-Key": "102234",
+    "X-Envoy-Attempt-Count": "1",
+    "X-Envoy-External-Address": "140.205.11.250",
+    "X-Envoy-Original-Host": "env-cu9g82mm1hkui0vcv5eg-cn-hangzhou.alicloudapi.com",
+    "X-Envoy-Route-Identifier": "true",
+    "X-Fc-Access-Key-Id": "",
+    "X-Fc-Access-Key-Secret": "",
+    "X-Fc-Account-Id": "1419633767709936",
+    "X-Fc-Api-Server-Ip": "",
+    "X-Fc-Base-Path": "/get",
+    "X-Fc-Client-Ip": "",
+    "X-Fc-Control-Path": "/http-invoke",
+    "X-Fc-Eagleeye-Rpcid": "",
+    "X-Fc-Eagleeye-Traceid": "",
+    "X-Fc-Eagleeye-Userdata": "",
+    "X-Fc-Function-Handler": "index.handler",
+    "X-Fc-Function-Memory": "1024",
+    "X-Fc-Function-Name": "key-rate-limit-plugin-fmic",
+    "X-Fc-Function-Timeout": "3",
+    "X-Fc-Qualifier": "LATEST",
+    "X-Fc-Region": "cn-hangzhou",
+    "X-Fc-Request-Id": "1-67a46b2e-15de0407-cbb76138ab7f",
+    "X-Fc-Retry-Count": "0",
+    "X-Fc-Security-Token": "",
+    "X-Fc-Service-Logproject": "",
+    "X-Fc-Service-Logstore": "",
+    "X-Fc-Service-Name": "",
+    "X-Fc-Tracing-Jaeger-Endpoint": "",
+    "X-Fc-Tracing-Opentracing-Span-Baggages": "",
+    "X-Fc-Tracing-Opentracing-Span-Context": "",
+    "X-Fc-Version-Id": ""
+  },
+  "origin": "140.205.11.250, 100.117.33.237",
+  "url": "http,http://key-ratgin-fmic-ncdnjmvpru.cn-hangzhou-vpc.fcapp.run/get"
+}
+```
+
+2. 发起带流量管控 Query 参数的请求
+   为确保请求时触发限流管控，请在请求地址中添加 apikey 参数。以下是示例命令：
+
+```
+curl -iv 'http://env-cu9g82mm1hkui0vcv5eg-cn-hangzhou.alicloudapi.com/get?apikey=9a342114-ba8a-11ec-b1bf-00163e1250b5'
+```
+
+预期返回结果：
+
+```
+rate_limited
+```
+
 ### 识别请求头 x-ca-key，进行区别限流
 
 ```yaml
@@ -50,9 +130,7 @@ limit_keys:
     query_per_second: 10
 ```
 
-## deploy
-
-## usage
+#### usage
 
 1. 发起未经流量管控的请求
    首先，尝试不带任何流量管控信息发起请求：
