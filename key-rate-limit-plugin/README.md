@@ -63,17 +63,17 @@ curl -iv 'http://env-cu9g82mm1hkui0vcv5eg-cn-hangzhou.alicloudapi.com/get'
 
 ```
 {
-  "args": {},
+  "args": {
+    "apikey": "9a342114-ba8a-11ec-b1bf-00163e1250b5"
+  },
   "headers": {
-    "Accept": "*/*",
     "Accept-Encoding": "gzip",
-    "Host": "key-ratgin-fmic-ncdnjmvpru.cn-hangzhou-vpc.fcapp.run:80",
+    "Host": "key-ratugin-pul-ccdnjmacrw.cn-hangzhou-vpc.fcapp.run",
     "Original-Host": "env-cu9g82mm1hkui0vcv5eg-cn-hangzhou.alicloudapi.com",
-    "Req-Start-Time": "1738828590263",
-    "User-Agent": "curl/7.86.0",
-    "X-Ca-Key": "102234",
+    "Req-Start-Time": "1738907445473",
+    "User-Agent": "Go-http-client/1.1",
     "X-Envoy-Attempt-Count": "1",
-    "X-Envoy-External-Address": "140.205.11.250",
+    "X-Envoy-Internal": "true",
     "X-Envoy-Original-Host": "env-cu9g82mm1hkui0vcv5eg-cn-hangzhou.alicloudapi.com",
     "X-Envoy-Route-Identifier": "true",
     "X-Fc-Access-Key-Id": "",
@@ -88,11 +88,11 @@ curl -iv 'http://env-cu9g82mm1hkui0vcv5eg-cn-hangzhou.alicloudapi.com/get'
     "X-Fc-Eagleeye-Userdata": "",
     "X-Fc-Function-Handler": "index.handler",
     "X-Fc-Function-Memory": "1024",
-    "X-Fc-Function-Name": "key-rate-limit-plugin-fmic",
+    "X-Fc-Function-Name": "key-rate-limit-plugin-1pul",
     "X-Fc-Function-Timeout": "3",
     "X-Fc-Qualifier": "LATEST",
     "X-Fc-Region": "cn-hangzhou",
-    "X-Fc-Request-Id": "1-67a46b2e-15de0407-cbb76138ab7f",
+    "X-Fc-Request-Id": "1-67a59f35-150c1267-f381ba1c085c",
     "X-Fc-Retry-Count": "0",
     "X-Fc-Security-Token": "",
     "X-Fc-Service-Logproject": "",
@@ -103,8 +103,8 @@ curl -iv 'http://env-cu9g82mm1hkui0vcv5eg-cn-hangzhou.alicloudapi.com/get'
     "X-Fc-Tracing-Opentracing-Span-Context": "",
     "X-Fc-Version-Id": ""
   },
-  "origin": "140.205.11.250, 100.117.33.237",
-  "url": "http,http://key-ratgin-fmic-ncdnjmvpru.cn-hangzhou-vpc.fcapp.run/get"
+  "origin": "172.16.37.65, 100.117.33.29",
+  "url": "http,http://key-ratugin-pul-ccdnjmacrw.cn-hangzhou-vpc.fcapp.run/get?apikey=9a342114-ba8a-11ec-b1bf-00163e1250b5"
 }
 ```
 
