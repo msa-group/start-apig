@@ -1,7 +1,6 @@
-# intro
+# 概述
 AK/SK(hmac-auth)是一种基于HMAC（Hash-based Message Authentication Code）算法的签名认证方式。客户端在调用API时，需要使用签名密钥（SK）对请求内容进行签名计算，并将签名以及访问密钥（AK）一并传输给服务器端进行签名验证。此机制确保了请求的真实性和完整性，防止未授权访问和请求篡改。
 
-## summary
 ### 场景描述
 在现代云原生架构中，API网关扮演着关键的角色，负责管理、路由和保护进入的API请求。随着微服务和分布式系统的普及，API的调用频率和复杂性显著增加，传统的鉴权方式（如简单的API Key或Token认证）在安全性和可扩展性方面逐渐暴露出不足。AK/SK鉴权通过HMAC算法提供更高层次的安全保障，适用于需要严格身份验证和数据完整性的场景。
 
@@ -23,7 +22,7 @@ AK/SK(hmac-auth)是一种基于HMAC（Hash-based Message Authentication Code）�
 7. **灵活性和兼容性**：支持多种HMAC算法（如HMAC-SHA256），适应不同的安全需求和性能要求，便于集成到现有系统中。
 8. **审计和监控**：通过记录和验证每个请求的签名，提供详细的审计日志，便于安全监控和问题追踪。
 
-## Architecture
+## 架构
 
 ```mermaid
 flowchart TB
@@ -44,7 +43,7 @@ consumers:
 	- x-api-key
 ```
 
-## deploy
+## 部署
 
 ## usage
 

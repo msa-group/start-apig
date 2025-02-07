@@ -3,7 +3,6 @@
 
 作为云原生架构的核心基础设施，云原生API 网关通过原生支持 gRPC 协议（基于 HTTP/2 的高性能 RPC 框架），提供完整的协议感知能力，实现对 gRPC 服务的智能路由、协议转换和全生命周期管理。其核心价值在于统一南北向流量治理，同时保持 gRPC 的低延迟、流式传输等特性。
 
-## Summary
 ### 场景描述
 1. **异构协议环境**：在混合部署架构中，前端使用 RESTful API 而微服务间采用 gRPC 通信
 2. **服务治理需求**：需要对 gRPC 流量实施精细化的服务治理策略（熔断、限流、鉴权）
@@ -31,7 +30,7 @@ B -->|基于 Method 路由| E[Service v3]
 ```
 
 
-## Architecture
+## 架构
 ```mermaid
 flowchart TB
 A[fa:fa-users gRPC 请求] --> B{fa:fa-route 网关路由}
@@ -39,6 +38,6 @@ B -->|基于Header| C[fa:fa-docker Service v1]
 ```
 	
 
-## deploy
+## 部署
 
 ## usage

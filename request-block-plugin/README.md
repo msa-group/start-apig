@@ -1,7 +1,6 @@
-# Intro
+# 概述
 **request-block** 是一款用于云原生 API 网关的请求屏蔽插件，通过基于 URL、请求头等特征对 HTTP 请求进行筛选和屏蔽。该插件可用于防护站点资源不被非法访问或暴露，提升系统的安全性和可靠性。
 
-## Summary
 ### 场景描述
 在现代 Web 应用和微服务架构中，API 网关作为流量入口，需要有效过滤和管理大量的 HTTP 请求。部分资源可能不适合公开暴露，如内部管理接口、开发调试工具等。未经筛选的请求可能导致资源滥用、数据泄露或服务被攻击。因此，具备强大的请求屏蔽能力对于保护系统安全和维护服务健康至关重要。
 
@@ -22,13 +21,13 @@
 - **支持动态配置**：允许在运行时动态调整屏蔽规则，快速响应安全威胁或业务需求变化，提升系统的适应能力。
 
 
-## Architecture
+## 架构
 ```mermaid
 flowchart TB
 A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
 	B -->|/echo| P1[fa:fa-shield-alt request-block]
 	P1 --> Backend[fa:fa-server FC Service]
 ```
-## deploy
+## 部署
 
 ## usage

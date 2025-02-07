@@ -1,9 +1,8 @@
-# Intro
+# 概述
 HTTP API访问SAE应用里注册的K8s Service
 
 当您需要从外部系统或客户端访问部署在SAE中的服务时，可以通过在云原生API网关中创建HTTP API，从而实现访问SAE里应用提供的服务，提升了服务的可访问性和外部集成能力。
 
-## Summary
 ### 场景描述
 在现代企业应用架构中，服务通常部署在Kubernetes集群中，并通过Serverless App Engine（SAE）进行管理和扩展。然而，这些内部服务默认情况下仅在集群内部可见，限制了其与外部系统或客户端的直接交互需求。随着业务的发展，外部系统（如移动应用、第三方服务或合作伙伴系统）需要安全、高效地访问这些内部服务，以实现功能集成和数据交换。
 
@@ -27,13 +26,13 @@ HTTP API访问SAE应用里注册的K8s Service
 4. **监控与日志管理**：
 	集成的监控和日志功能，帮助运维团队实时监控API调用情况，快速定位和解决潜在问题，提升整体系统的可靠性。
 
-## Architecture
+## 架构
 ```mermaid
 flowchart TB
 A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
 	B -->|/echo| P1[fa:fa-shield-alt 限流]
 	P1 --> Backend[fa:fa-server SAE Service]
 ```
-## deploy
+## 部署
 
 ## usage

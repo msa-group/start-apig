@@ -1,7 +1,6 @@
-# Intro
+# 概述
 **key-rate-limit**：基于 Key 的本地限流插件
 
-## Summary
 ### 场景描述
 **key-rate-limit** 插件实现了基于特定键值的限流机制，键值来源可配置为 URL 参数、HTTP 请求头等多种方式。通过对不同的键进行独立的请求计数和限流控制，确保 API 服务在高并发环境下的稳定性和可用性。
 
@@ -18,13 +17,13 @@
 - **防护恶意请求**：通过精准限流，减少恶意爬虫、DDoS 攻击等对服务的冲击，提升整体安全性。
 
 
-## Architecture
+## 架构
 ```mermaid
 flowchart TB
 A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
 	B -->|/echo| P1[fa:fa-shield-alt key-rate-limit]
 	P1 --> Backend[fa:fa-server FC Service]
 ```
-## deploy
+## 部署
 
 ## usage

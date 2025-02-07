@@ -1,8 +1,7 @@
-# Intro
+# 概述
 
 **key-auth** 插件为云原生 API 网关提供了基于 API Key 的认证和权限控制功能。通过从 HTTP 请求的 URL 参数或请求头中提取 API Key，并验证其有效性和权限，该插件确保了 API 资源的安全访问。插件支持灵活的配置选项，允许管理员定义 API Key 的生成、分发和验证机制，适应不同的业务需求和安全策略。
 
-## Summary
 
 ### 场景描述
 
@@ -62,7 +61,7 @@
 - **防止流量滥用和攻击**：
   通过 API Key 限流和配额管理，防止单一或多个客户端过度消耗资源，减轻系统负载，防御拒绝服务（DoS）攻击等威胁。
 
-## Architecture
+## 架构
 
 ```mermaid
 flowchart TB
@@ -83,7 +82,7 @@ consumers:
 	- x-api-key
 ```
 
-## deploy
+## 部署
 
 ## usage
 

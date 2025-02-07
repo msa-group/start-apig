@@ -1,9 +1,8 @@
-# Intro
+# 概述
 **bot-detect**：Bot 拦截
 
 **bot-detect** 是一款用于云原生 API 网关的 Bot 拦截插件，旨在识别并阻止恶意或不受欢迎的互联网爬虫对站点资源的爬取。通过分析请求的User-Agent有效区分人类用户与自动化脚本，保护网站资源免受滥用和潜在攻击的影响。
 
-## Summary
 
 ### 场景描述
 在当今互联网环境中，网站和在线服务面临大量来自自动化脚本和爬虫的访问请求。这些请求可能用于数据抓取、内容盗用、资源消耗甚至发动分布式拒绝服务（DDoS）攻击，严重影响网站的性能和用户体验。传统的防护手段往往难以精准识别和拦截恶意 Bot，导致合法用户和恶意请求混杂，增加了管理和维护的复杂性。**bot-detect** 插件应运而生，提供了一种高效且灵活的解决方案，以应对复杂多变的 Bot 攻击和滥用行为。
@@ -41,13 +40,13 @@
 - **降低运营成本**：通过自动化的Bot拦截，减少因恶意流量带来的额外成本支出，优化运营资源分配。
 
 
-## Architecture
+## 架构
 ```mermaid
 flowchart TB
 A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
 	B -->|/echo| P1[fa:fa-shield-alt bot-detect]
 	P1 --> Backend[fa:fa-server FC Service]
 ```
-## deploy
+## 部署
 
 ## usage

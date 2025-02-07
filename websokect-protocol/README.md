@@ -1,7 +1,6 @@
-# intro
+# 概述
 云原生 API 网关实现 WebSocket 服务的转发
 
-## summary
 ### 场景描述
 云原生 API 网关通过动态路由、协议转换和智能负载均衡能力，有效解决 WebSocket 服务在分布式架构中的长连接管理、安全防护和高可用性问题，支撑实时双向通信场景的规模化落地。
 ### 应用场景
@@ -27,7 +26,7 @@
    提供连接数、消息吞吐量、异常断开率等维度监控指标，结合分布式追踪（如 OpenTelemetry）实现全链路消息审计。
 5. **安全防护体系**  
    集成 JWT/OAuth2.0 身份验证，防范 DDoS 攻击（集成WAF 防护），实施 TLS 1.3 加密传输，支持基于 SNI 的证书动态加载。
-## Architecture
+## 架构
 ```mermaid
 flowchart TB
 A[fa:fa-users websokect 请求] --> B{fa:fa-route 网关路由}
@@ -35,6 +34,6 @@ A[fa:fa-users websokect 请求] --> B{fa:fa-route 网关路由}
 	B -->|/?response=foo| P1
 	P1 --> Service[fa:fa-docker Sae Service]
 ```
-## deploy
+## 部署
 
 ## usage
