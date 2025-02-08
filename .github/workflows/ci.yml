@@ -3,9 +3,9 @@ name: CI
 on:
   push:
     branches:
-      - v3
+      - feature/plugin
     paths:
-      - "**/publish.yaml"
+      - "**/description.yml"
 
 jobs:
   find-directories:
