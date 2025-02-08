@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - v3
+    paths:
+      - "**/publish.yaml"
+
+jobs:
+  find-directories:
+    runs-on: ubuntu-latest
+    outputs:
+      directories: ${{ steps.set-dirs.outputs.directories }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Find modified directories
+        id: set-dirs
+        run: |
+          if git rev-parse HEAD^ >/dev/null 2>&1; then
+            MODIFIED_PATHS=$(git diff --name-only HEAD^ HEAD)
+          else
+            echo "No parent commit found (initial commit), comparing against empty tree."
+            MODIFIED_PATHS=$(git diff-tree --no-commit-id --name-only -r HEAD)
+          fi
+
+          DIRECTORIES=()
+
+          for path in $MODIFIED_PATHS; do
+            if [[ $path == */publish.yaml ]]; then
+              DIRECTORY=$(dirname "$path")
+              [[ ! " ${DIRECTORIES[@]} " =~ " ${DIRECTORY} " ]] && DIRECTORIES+=("$DIRECTORY")
+            fi
+          done
+
+          if [[ ${#DIRECTORIES[@]} -eq 0 ]]; then
+            json_array="[]"
+          else
+            json_array="["
+            for dir in "${DIRECTORIES[@]}"; do
+              json_array+="\"$dir\","
+            done
+            json_array="${json_array%,}]"
+          fi
+
+          echo "directories=$json_array" >> $GITHUB_OUTPUT
+
+  trigger-publish:
+    needs: find-directories
+    uses: ./.github/workflows/beta-registry-publish.yml
+    with:
+      project: ${{ matrix.dir }}
+    secrets:
+      ALIBABA_REGISTRY_V3_PUBLISH_TOKEN: ${{ secrets.ALIBABA_REGISTRY_V3_PUBLISH_TOKEN }}
+      BAILIAN_APP_ID: ${{ secrets.BAILIAN_APP_ID }}
+      BAILIAN_API_KEY: ${{ secrets.BAILIAN_API_KEY }}
+    strategy:
+      matrix:
+        dir: ${{ fromJson(needs.find-directories.outputs.directories) }}
