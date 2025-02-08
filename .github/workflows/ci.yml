@@ -56,8 +56,7 @@ jobs:
       project: ${{ matrix.dir }}
     secrets:
       ALIBABA_REGISTRY_V3_PUBLISH_TOKEN: ${{ secrets.ALIBABA_REGISTRY_V3_PUBLISH_TOKEN }}
-      BAILIAN_APP_ID: ${{ secrets.BAILIAN_APP_ID }}
-      BAILIAN_API_KEY: ${{ secrets.BAILIAN_API_KEY }}
+      FC_SERVICE_URL: ${{ secrets.FC_SERVICE_URL }}
     strategy:
       matrix:
         dir: ${{ fromJson(needs.find-directories.outputs.directories) }}
