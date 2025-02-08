@@ -23,8 +23,12 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: "${{ github.workspace }}/${{ inputs.project }}"
+        working-directory: "./${{ inputs.project }}"
     steps:
+      - name: Print project input
+        run: |
+          echo "当前位置：$(pwd)"
+          ls -la
       - run: git config --global core.symlinks false
         shell: bash
       - uses: actions/checkout@v4
