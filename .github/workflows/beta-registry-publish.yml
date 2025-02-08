@@ -1,7 +1,5 @@
 name: Registry Publish
 
-name: Registry Publish
-
 on:
   workflow_call:
     inputs:
