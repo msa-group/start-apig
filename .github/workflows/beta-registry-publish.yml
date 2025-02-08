@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: "./${{ inputs.project }}"
+        working-directory: ./${{ inputs.project }}
     steps:
       - name: Print project input
         run: |
