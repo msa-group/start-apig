@@ -31,7 +31,7 @@ jobs:
           DIRECTORIES=()
 
           for path in $MODIFIED_PATHS; do
-            if [[ $path == */description.yaml ]]; then
+            if [[ $path == */description.yml ]]; then
               DIRECTORY=$(dirname "$path")
               [[ ! " ${DIRECTORIES[@]} " =~ " ${DIRECTORY} " ]] && DIRECTORIES+=("$DIRECTORY")
             fi
