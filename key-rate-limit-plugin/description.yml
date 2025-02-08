@@ -1,4 +1,4 @@
-Description: 基于特定键值实现限流，键值来源可以是 URL 参数、HTTP 请求头
+Description: 基于特定键值实现限流，键值来源可以是 URL 参数、HTTP 请求头。
 Version: 0.0.1
 Tags:
   - 限流
