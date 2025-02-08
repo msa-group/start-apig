@@ -21,40 +21,40 @@ env:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    # defaults:
-    #   run:
-    #     working-directory: ./${{ inputs.project }}
+    defaults:
+      run:
+        working-directory: ${{ inputs.project }}
     steps:
+      - uses: actions/checkout@v4
       - name: Print project input
         run: |
           echo "当前位置：$(pwd)"
           ls -la
-      # - run: git config --global core.symlinks false
-      #   shell: bash
-      # - uses: actions/checkout@v4
-      # - uses: actions/setup-node@v2
-      #   with:
-      #     node-version: 16
-      #     registry-url: https://registry.npmjs.org/
-      # - name: Install dependencies
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y git make jq curl wget
-      # - name: generate README
-      #   run: |
-      #     npx msa-tool generate
-      # - name: List files
-      #   run: |
-      #     ls -la
-      # - name: generate publish.yaml
-      #   run: |
-      #     npx msa-tool publish
-      # - name: install s
-      #   run: |
-      #     npm i @serverless-devs/s@3.1.3 -g
-      # - name: s registry login
-      #   run: |
-      #     s registry login --token ${{ secrets.ALIBABA_REGISTRY_V3_PUBLISH_TOKEN }}
-      # - name: release prod
-      #   run: |
-      #     s registry publish
+      - run: git config --global core.symlinks false
+        shell: bash
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git make jq curl wget
+      - name: generate README
+        run: |
+          npx msa-tool generate
+      - name: List files
+        run: |
+          ls -la
+      - name: generate publish.yaml
+        run: |
+          npx msa-tool publish
+      - name: install s
+        run: |
+          npm i @serverless-devs/s@3.1.3 -g
+      - name: s registry login
+        run: |
+          s registry login --token ${{ secrets.ALIBABA_REGISTRY_V3_PUBLISH_TOKEN }}
+      - name: release prod
+        run: |
+          s registry publish
