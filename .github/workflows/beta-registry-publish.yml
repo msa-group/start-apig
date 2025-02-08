@@ -21,14 +21,19 @@ jobs:
       run:
         working-directory: ${{ inputs.project }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Print project input
         run: |
           echo "当前位置：$(pwd)"
           ls -la
-      - run: git config --global core.symlinks false
+      - name: Configure Git
+        run: git config --global core.symlinks false
         shell: bash
-      - uses: actions/setup-node@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
@@ -36,9 +41,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y git make jq curl wget
-      - name: generate README
+      - name: Generate README
         run: |
           npx msa-tool generate -u ${{ secrets.FC_SERVICE_URL }}
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
       - name: List files
         run: |
           ls -la
