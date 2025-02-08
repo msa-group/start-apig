@@ -50,8 +50,6 @@ limit_keys:
     query_per_second: 10
 ```
 
-#### usage
-
 1. 发起未经流量管控的请求
    首先，尝试不带任何流量管控信息发起请求：
 
@@ -129,8 +127,6 @@ limit_keys:
   - key: 102234
     query_per_second: 10
 ```
-
-#### usage
 
 1. 发起未经流量管控的请求
    首先，尝试不带任何流量管控信息发起请求：
