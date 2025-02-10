@@ -1,0 +1,15 @@
+Description: 是一款用于云原生 API 网关的流量染色插件，通过在请求中添加特定的请求头，根据权重或特定请求内容对流量进行染色。该插件支持复杂的逻辑判断，允许用户根据自定义标准对流量进行精确染色，从而实现灰度发布、A/B 测试等高级流量控制和管理。
+Version: 0.0.1
+Tags:
+  - 流量管控
+Name: traffic-tag-plugin
+Service:
+  API网关:
+    Authorities:
+      - AliyunAPIGFullAccess
+Parameters:
+  type: object
+  properties:
+    Icon: https://higress.io/img/higress_logo_small.png
+Project:
+  region: cn-hangzhou

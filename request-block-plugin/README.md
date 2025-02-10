@@ -110,7 +110,7 @@ curl -iv 'http://env-cu9g82mm1hkui0vcv5eg-cn-hangzhou.alicloudapi.com/get?foo=ba
 预期返回结果：
 
 ```
-<!-- 返回内容可通过  blocked_message 配置 -->
+<!-- 返回内容可通过 blocked_message 配置 -->
 请求已屏蔽
 ```
 
