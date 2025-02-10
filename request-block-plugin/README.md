@@ -33,7 +33,7 @@ A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
 	P1 --> Backend[fa:fa-server FC Service]
 ```
 
-本示例`request-block`插件的配置如下：
+本示例 `request-block` 插件的配置如下：
 
 > 更多配置详情，请查阅[Github 文档](https://github.com/alibaba/higress/blob/main/plugins/wasm-cpp/extensions/request_block/README.md)
 
