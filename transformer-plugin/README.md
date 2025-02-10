@@ -59,7 +59,7 @@ A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
 	P1 --> Backend[fa:fa-server FC Service]
 ```
 
-本示例`transformer`插件的配置如下：
+本示例 `transformer` 插件的配置如下：
 
 > 更多配置详情，请查阅[Github 文档](https://github.com/alibaba/higress/blob/main/plugins/wasm-go/extensions/transformer/README.md)
 
