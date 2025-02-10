@@ -61,7 +61,7 @@ Composer:
           - HOST: {{RosOutputHostName(FcBackend.HttpTrigger, "UrlIntranet")}}
       RouteIds:
         - {{RosOutput(HttpRoute, "RouteId")}}
-  KeyRateLimitPlugin:
+  RequestBlockPlugin:
     DependsOn: HttpRoute
     Component: apig.router.plugin
     Parameters:

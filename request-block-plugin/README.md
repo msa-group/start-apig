@@ -273,8 +273,6 @@ curl -iv 'http://env-cu9g82mm1hkui0vcv5eg-cn-hangzhou.alicloudapi.com/get' -d 'h
 请求已屏蔽
 ```
 
-#### 注意事项
-
 #### 请求 Body 大小限制
 
 当配置了 block_bodies 时，仅支持小于 32 MB 的请求 Body 进行匹配。若请求 Body 大于此限制，并且不存在匹配到的 block_urls 和 block_headers 项时，不会对该请求执行屏蔽操作 当配置了 block_bodies 时，若请求 Body 超过全局配置 DownstreamConnectionBufferLimits，将返回 413 Payload Too Large
