@@ -1,0 +1,17 @@
+Description: 基于 URL、请求头等特征屏蔽 HTTP 请求，可以用于防护部分站点资源不对外部暴露。
+Version: 0.0.3
+Tags:
+  - 插件
+  - 请求屏蔽
+  - 安全防护
+Name: request-block-plugin
+Service:
+  API网关:
+    Authorities:
+      - AliyunAPIGFullAccess
+Parameters:
+  type: object
+  properties:
+    Icon: https://higress.io/img/higress_logo_small.png
+Project:
+  region: cn-hangzhou

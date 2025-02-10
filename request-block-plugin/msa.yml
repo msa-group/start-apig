@@ -1,0 +1,74 @@
+Parameters:
+  GatewayId:
+    Type: String
+    Default: 'gw-cu9g7dem1hkn32ee70bg'
+  Region:
+    Type: String
+    Default: 'cn-hangzhou'
+  EnvironmentId:
+    Type: String
+    Default: 'env-cu9g82mm1hkui0vcv5eg'
+  PluginClassId:
+    Type: String
+    Default: 'pls-cqebrgh4ckt6ppatmprd'
+  Name:
+    Type: String
+    Default: 'request-block-plugin'
+Composer:
+  FcBackend:
+    Component: fc3
+    Properties:
+      Function:
+        CustomContainerConfig:
+          Fn::Sub:
+            - '{"Port": 80,"Image":"registry.${Region}.aliyuncs.com/oss-share/msa:httpbin", "RegistryConfig":{"CertConfig":{"Insecure":false}}}'
+            - Region: {{Parameters.Region}}
+    Parameters:
+      Name: {{Subfix(Parameters.Name)}}
+  Service:
+    DependsOn: FcBackend
+    Component: apig.service
+    Parameters:
+      Port: 80
+      AddressesName: {{RosOutputHostName(FcBackend.HttpTrigger, "UrlIntranet")}}
+      Name: {{Subfix(Join([Parameters.Name, '-','svc']))}}
+  RouteApi:
+    Component: apig.http.api
+    Parameters:
+      ApiName: {{Subfix(Join([Parameters.Name, '-','http']))}}
+  HttpRoute:
+    DependsOn:
+      - Service
+      - RouteApi
+    Component: apig.route
+    Operation:
+      ApiId: {{RosOutput(RouteApi, "HttpApiId")}}
+      Name: {{Parameters.Name}}
+      Path: 'Prefix /'
+      Scene: SingleService
+      Services:
+        - ServiceId: {{RosOutput(Service, "ServiceId")}}
+          Protocol: HTTP
+          Weight: 100
+  HttpRewritePolicy:
+    DependsOn: HttpRoute
+    Component: apig.router.policy
+    Parameters:
+      PolicyClassName: "HttpRewrite"
+      PolicyConfig:
+        Fn::Sub:
+          - '{"pathType":"Prefix","host":"${HOST}","enable":true}'
+          - HOST: {{RosOutputHostName(FcBackend.HttpTrigger, "UrlIntranet")}}
+      RouteIds:
+        - {{RosOutput(HttpRoute, "RouteId")}}
+  RequestBlockPlugin:
+    DependsOn: HttpRoute
+    Component: apig.router.plugin
+    Parameters:
+      PluginClassId: {{Parameters.PluginClassId}}
+      RouteIds:
+        - {{RosOutput(HttpRoute, "RouteId")}}
+      PluginConfig: |
+        block_urls:
+          - get
+          - foo=bar

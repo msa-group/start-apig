@@ -9,13 +9,9 @@ on:
     secrets:
       ALIBABA_REGISTRY_V3_PUBLISH_TOKEN:
         required: true
-      BAILIAN_APP_ID:
-        required: true
-      BAILIAN_API_KEY:
+      FC_SERVICE_URL:
         required: true
 env:
-  BAILIAN_APP_ID: ${{ secrets.BAILIAN_APP_ID }}
-  BAILIAN_API_KEY: ${{ secrets.BAILIAN_API_KEY }}
   SEMVER_TYPE: patch
 
 jobs:
@@ -23,12 +19,21 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: "${{ github.workspace }}/${{ inputs.project }}"
+        working-directory: ${{ inputs.project }}
     steps:
-      - run: git config --global core.symlinks false
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Print project input
+        run: |
+          echo "当前位置：$(pwd)"
+          ls -la
+      - name: Configure Git
+        run: git config --global core.symlinks false
         shell: bash
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
@@ -36,9 +41,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y git make jq curl wget
-      - name: generate README
+      - name: Generate README
         run: |
-          npx msa-tool generate
+          npx msa-tool generate -u ${{ secrets.FC_SERVICE_URL }}
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
       - name: List files
         run: |
           ls -la
