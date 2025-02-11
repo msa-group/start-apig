@@ -2,7 +2,6 @@
 
 **key-auth** 插件为云原生 API 网关提供了基于 API Key 的认证和权限控制功能。通过从 HTTP 请求的 URL 参数或请求头中提取 API Key，并验证其有效性和权限，该插件确保了 API 资源的安全访问。插件支持灵活的配置选项，允许管理员定义 API Key 的生成、分发和验证机制，适应不同的业务需求和安全策略。
 
-
 ### 场景描述
 
 在微服务架构和分布式系统中，API 网关作为统一的入口点，承担着认证、鉴权、流量控制等关键职责。随着 API 的广泛应用，确保 API 的安全访问变得尤为重要。传统的认证方法可能难以满足高效、灵活的认证需求，而基于 API Key 的认证机制因其简单性和易于管理性，成为许多企业的首选。**key-auth** 插件应运而生，通过提供可靠的 API Key 认证功能，帮助企业保护其 API 资源，防止未经授权的访问和滥用。
@@ -70,7 +69,7 @@ A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
 	P1 --> Backend[fa:fa-server FC Service]
 ```
 
-本示例`key-auth`插件的配置如下：
+本示例 `key-auth` 插件的配置如下：
 
 > 更多配置详情，请查阅[Github 文档](https://github.com/alibaba/higress/blob/main/plugins/wasm-go/extensions/key-auth/README.md)
 
