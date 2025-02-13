@@ -40,9 +40,22 @@
 
 ```mermaid
 flowchart TB
-A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
-	B -->|/get| P1[fa:fa-shield-alt bot-detect]
-	P1 --> Backend[fa:fa-server FC Service]
+A[fa:fa-users 用户请求] --> B{fa:fa-route 网关路由}
+B -->|/get| C[fa:fa-shield-alt Bot检测引擎]
+C -->|合法请求| D[fa:fa-server FC Service]
+C -->|异常流量| E[fa:fa-ban 阻断响应]
+
+subgraph 检测引擎
+C1[fa:fa-user-secret UA分析]
+C2[fa:fa-tachometer 频率监控]
+C3[fa:fa-project-diagram 行为模型]
+end
+
+C --> C1
+C --> C2
+C --> C3
+
+
 ```
 
 本示例 `bot-detect` 插件的配置如下：

@@ -31,13 +31,20 @@
 ```mermaid
 flowchart TB
 A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
-	B -->|/echo| P1[fa:fa-shield-alt basic-auth]
-	P1 --> Backend[fa:fa-server FC Service]
+	B -->|/get| P1[fa:fa-shield-alt basic-auth]
+	P1 -->|验证成功| Backend[fa:fa-server FC Service]
+	P1 -->|验证失败| E[返回 401 Unauthorized]
+	P1 -->|日志记录| L[审计和监控日志]
+	P1 -->|与 HTTPS 结合| S[fa:fa-lock 加密传输]
+	Backend -->|内部服务通信| M[微服务]
+	Backend -->|管理接口保护| C[管理员控制台]
+	Backend -->|临时访问控制| T[临时用户]
+	Backend -->|集成第三方工具| D[第三方服务]
 ```
 
-本示例 `key-auth` 插件的配置如下：
+本示例`basic-auth`插件的配置如下：
 
-> 更多配置详情，请查阅[Github 文档](https://github.com/alibaba/higress/blob/main/plugins/wasm-go/extensions/key-auth/README.md)
+> 更多配置详情，请查阅[Github 文档](https://github.com/alibaba/higress/blob/main/plugins/wasm-go/extensions/basic-auth/README.md)
 
 ```
 consumers:

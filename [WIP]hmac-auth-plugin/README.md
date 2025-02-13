@@ -31,13 +31,40 @@ AK/SK(hmac-auth)是一种基于 HMAC（Hash-based Message Authentication Code）
 ```mermaid
 flowchart TB
 A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
-	B -->|/echo| P1[fa:fa-shield-alt hmac-auth]
-	P1 --> Backend[fa:fa-server FC Service]
+B -->|/get| C[fa:fa-shield-alt hmac-auth]
+C ---> D[认证配置]
+C ---> F[鉴权配置]
+
+
+subgraph 认证核心
+D -->|启用global_auth| C1[全局认证]
+D -->|路由级配置| C2[局部认证]
+C1 & C2 --> C3[查询consumers]
+C3 --> C4[校验Secret+时间偏移]
+end
+
+subgraph 鉴权流程
+  F -->|存在allow列表| E[检查键值]
+end
+
+F -->|未配置| G[fa:fa-server FC Service]
+E -->|存在allow列表| G[fa:fa-server FC Service]
+E -->|不在列表| H[返回403]
+C4 ---> Backend[fa:fa-server FC Service]
+
+
+classDef green fill:#e8f5e9,stroke:#2e7d32
+classDef red fill:#ffebee,stroke:#c62828
+classDef blue fill:#e3f2fd,stroke:#1565c0
+
+class A,B,C green
+class D,F,C1,C2,C3,C4,F,E blue
+class H red
 ```
 
 本示例 `hmac-auth` 插件的配置如下：
 
-> 更多配置详情，请查阅[Github 文档](https://github.com/alibaba/higress/blob/main/plugins/wasm-go/extensions/hmac-auth/README.md)
+> 更多配置详情，请查阅[Github 文档](https://github.com/alibaba/higress/blob/main/plugins/wasm-cpp/extensions/hmac_auth/README.md)
 
 ```
 consumers:

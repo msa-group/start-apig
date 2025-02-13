@@ -64,9 +64,41 @@
 
 ```mermaid
 flowchart TB
-A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
-	B -->|/get| P1[fa:fa-shield-alt key-auth]
-	P1 --> Backend[fa:fa-server FC Service]
+%% 左半区：请求处理流
+A[fa:fa-globe HTTP请求] --> B{fa:fa-sitemash 网关路由}
+B --> C[fa:fa-key key-auth认证]
+C --> D{访问决策}
+
+%% 右半区：密钥管理
+subgraph KM[密钥管理集群]
+  direction TB
+  K1[fa:fa-database 密钥存储] <--> K2[fa:fa-sync-alt 同步服务]
+  K2 <--> K3[fa:fa-user-cog 管理控制台]
+end
+
+%% 下半区：响应处理
+subgraph RS[响应系统]
+  direction LR
+  S1[fa:fa-server FC Service]
+  S2[fa:fa-ban 阻断响应]
+  S3[fa:fa-clock 限流响应]
+end
+
+%% 连接关系
+C -->|验证请求| KM
+D -->|有效请求| S1
+D -->|非法密钥| S2
+D -->|配额耗尽| S3
+KM -->|策略同步| C
+
+%% 建议配色方案
+classDef green fill:#e8f5e9,stroke:#2e7d32
+classDef red fill:#ffebee,stroke:#c62828
+classDef blue fill:#e3f2fd,stroke:#1565c0
+class A,B,C,D green
+class KM blue
+class RS red
+
 ```
 
 本示例 `key-auth` 插件的配置如下：

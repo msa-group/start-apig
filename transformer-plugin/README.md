@@ -54,9 +54,35 @@
 
 ```mermaid
 flowchart TB
-A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
-	B -->|/get| P1[fa:fa-shield-alt transformer]
-	P1 --> Backend[fa:fa-server FC Service]
+A[fa:fa-globe HTTP请求] --> B{fa:fa-route API网关}
+B --> |/get| C[fa:fa-exchange transformer插件] ---> D["fa:fa-edit 请求转换配置"]
+C[fa:fa-exchange transformer插件] ---> F["fa:fa-edit 响应转换配置"]
+
+subgraph 请求转换流程
+D --> D1[请求头转换]
+D --> D2[查询参数转换]
+D --> D3[请求体转换]
+end
+
+subgraph 响应转换流程
+F --> F1[响应头转换]
+F --> F2[响应体转换]
+end
+
+D1 --> G[fa:fa-server FC Service]
+D2 --> G[fa:fa-server FC Service]
+D3 --> G[fa:fa-server FC Service]
+F1 --> G[fa:fa-server FC Service]
+F2 --> G[fa:fa-server FC Service]
+
+classDef green fill:#e8f5e9,stroke:#2e7d32
+classDef red fill:#ffebee,stroke:#c62828
+classDef blue fill:#e3f2fd,stroke:#1565c0
+
+class A,B,C green
+class D,D1,D2,D3 blue
+class F,F1,F2 red
+
 ```
 
 本示例 `transformer` 插件的配置如下：

@@ -28,8 +28,24 @@
 ```mermaid
 flowchart TB
 A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
-	B -->|/get| P1[fa:fa-shield-alt traffic-tag]
-	P1 --> Backend[fa:fa-server FC Service]
+B --> |/get| C[fa:fa-shield-alt traffic-tag]
+
+subgraph TrafficTag[流量染色逻辑]
+C -->|匹配成功| F[添加X-Traffic-Tag]
+C -->|未匹配| G[默认流量]
+end
+
+F --> H[灰度服务集群]
+G --> I[生产服务集群]
+
+classDef green fill:#e8f5e9,stroke:#2e7d32
+classDef red fill:#ffebee,stroke:#c62828
+classDef blue fill:#e3f2fd,stroke:#1565c0
+
+class A,B green
+class C,F,G blue
+class H red
+
 ```
 
 本示例`traffic-tag`插件的配置如下：

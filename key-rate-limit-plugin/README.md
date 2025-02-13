@@ -32,9 +32,35 @@ key-rate-limit 插件实现了基于特定键值的限流功能，键值来源�
 
 ```mermaid
 flowchart TB
-A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
-	B -->|/get| P1[fa:fa-shield-alt key-rate-limit]
-	P1 --> Backend[fa:fa-server FC Service]
+%% 请求和路由
+A[fa:fa-users 用户请求] --> B{fa:fa-route 网关路由}
+B -->|/get| P1[fa:fa-shield-alt key-rate-limit]
+
+%% 限流场景模块
+subgraph Limit_Scenarios[插件能力与场景]
+    P1 --> G1[fa:fa-users 客户端分级控制]
+    P1 --> G2[fa:fa-user 用户行为管控]
+    P1 --> G3[fa:fa-globe 地理区域限流]
+    P1 --> G4[fa:fa-file-download 资源防护]
+    P1 --> G5[fa:fa-fingerprint 设备指纹防控]
+    G1 --> F[限流检查结果]
+    G2 --> F[限流检查结果]
+    G3 --> F[限流检查结果]
+    G4 --> F[限流检查结果]
+    G5 --> F[限流检查结果]
+end
+%% 分发步骤
+F[限流检查结果] -->|通过| Backend[fa:fa-server FC Service]
+F[限流检查结果] -->|未通过| D1[fa:fa-ban 请求被限流]
+
+%% 建议配色方案
+classDef green fill:#e8f5e9,stroke:#2e7d32
+classDef red fill:#ffebee,stroke:#c62828
+classDef blue fill:#e3f2fd,stroke:#1565c0
+class A,B,C,D green
+class P1,G1,G2,G3,G4,G5,F blue
+class D1 red
+
 ```
 
 本示例`key-rate-limit`插件的配置如下：

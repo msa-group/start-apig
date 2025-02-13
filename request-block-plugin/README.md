@@ -29,8 +29,25 @@
 ```mermaid
 flowchart TB
 A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
-	B -->|/get| P1[fa:fa-shield-alt request-block]
-	P1 --> Backend[fa:fa-server FC Service]
+B -->|路由匹配| C[fa:fa-filter request-block插件]
+
+subgraph 安全过滤层[请求屏蔽处理]
+C --> C2[规则匹配引擎]
+end
+
+C2 -->|阻断规则命中| C3[fa:fa-ban 生成阻断响应]
+C2 -->|规则未命中| C4[fa:fa-server FC Service]
+
+subgraph 阻断流程
+C3 --> H[返回自定义阻断响应
+状态码:blocked_code
+消息:blocked_message]
+C3 --> I[记录安全日志
+存储匹配规则ID]
+end
+
+style 阻断流程 fill:#ffe6e6,stroke:#cc0000
+
 ```
 
 本示例 `request-block` 插件的配置如下：

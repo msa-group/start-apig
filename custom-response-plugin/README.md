@@ -33,9 +33,17 @@
 
 ```mermaid
 flowchart TB
-A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
-	B -->|/get| P1[fa:fa-shield-alt custom-response]
-	P1 --> Backend[fa:fa-server FC Service]
+A[fa:fa-globe HTTP请求] --> B{fa:fa-route 网关路由}
+B -->|/get| C[fa:fa-shield-alt custom-response]
+
+subgraph 自定义应答插件
+C --> C1{插件配置}
+end
+
+C1 -->|正常请求| D[fa:fa-server FC Service]
+C1 -->|Mock场景| E[fa:fa-code 模拟响应]
+C1 -->|限流触发| F[fa:fa-stop-circle 限流响应]
+C1 -->|认证失败| G[fa:fa-lock 安全响应]
 ```
 
 本示例 `custom-response` 插件的配置如下：
