@@ -10,7 +10,7 @@ Parameters:
     Default: 'cn-hangzhou'
   Name:
     Type: String
-    Default: 'key-auth-plugin'
+    Default: 'jwt-plugin'
 Composer:
   FcBackend:
     Component: fc3
@@ -33,38 +33,42 @@ Composer:
     Component: apig.http.api
     Parameters:
       ApiName: {{Subfix(Join([Parameters.Name, '-','http']))}}
-  HttpRoute:
+  HttpRouteVerification:
     DependsOn:
       - Service
       - RouteApi
     Component: apig.route
     Operation:
       ApiId: {{RosOutput(RouteApi, "HttpApiId")}}
-      Name: {{Parameters.Name}}
-      Path: 'Prefix /'
+      Name: verification
+      Path: 'Prefix /jwt-test'
       Scene: SingleService
       Services:
         - ServiceId: {{RosOutput(Service, "ServiceId")}}
           Protocol: HTTP
           Weight: 100
-  HttpRewritePolicy:
-    DependsOn: HttpRoute
-    Component: apig.router.policy
-    Parameters:
-      PolicyClassName: "HttpRewrite"
-      PolicyConfig:
-        Fn::Sub:
-          - '{"pathType":"Prefix","host":"${HOST}","enable":true}'
-          - HOST: {{RosOutputHostName(FcBackend.HttpTrigger, "UrlIntranet")}}
-      RouteIds:
-        - {{RosOutput(HttpRoute, "RouteId")}}
+  HttpRouteCreateAuth:
+    DependsOn:
+      - Service
+      - RouteApi
+    Component: apig.route
+    Operation:
+      ApiId: {{RosOutput(RouteApi, "HttpApiId")}}
+      Name: create-jwt
+      Path: 'Prefix /create-jwt'
+      Method: POST
+      Scene: SingleService
+      Services:
+        - ServiceId: {{RosOutput(Service, "ServiceId")}}
+          Protocol: HTTP
+          Weight: 100
   KeyAuthPlugin:
-    DependsOn: HttpRoute
+    DependsOn: HttpRouteVerification
     Component: apig.router.plugin
     Parameters:
-      PluginClassId: pls-cqebrgh4ckt6ppatmprx
+      PluginClassId: pls-cqebrgh4ckt6ppatmprr
       RouteIds:
-        - {{RosOutput(HttpRoute, "RouteId")}}
+        - {{RosOutput(HttpRouteVerification, "RouteId")}}
       PluginConfig: |
         consumers:
         - name: test
