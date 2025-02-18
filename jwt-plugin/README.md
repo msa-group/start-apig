@@ -62,10 +62,149 @@ return jsonify(code=200, msg="ok", data={"token": token})
 ```
 
 - nodejs 示例
+```
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const base64url = require('base64url');
 
+const app = express();
+app.use(express.json());
+
+const ISSUER = 'httpbin.org';
+const JWK_KEY = '6fYeKzXqP2FKV9INaq62tGG5Ypc3hLQZzsao3ULosHGGFuECmnspfcZT6ran3KlKEMvo_eR7eohjzbdmuPe6A3k2CRW3ZEr8LKQtHjlNY-fmjWX6rcyiRX26U3bPfEmrQWmlOVghDaAqPw0AUg0HfjgAGQrXw4iuyxqOI37tNi9jpIxYdOiKjSmUQVJ6rHDeqRT9KL6-dd9BPZ2hvSw_iEqr_R568qPvZv8oz3TQSveeavHFkakFIXfRfhvueeA5uGWD3MzIuY6a81uqFZ1JiMIy__BNIrEVO1oaTSf1J0XxFnqm7NtYtNDS0uX6NVVRZ-EGquAM8lg6xwNPDfeBjA';
+
+function padBase64url(input) {
+    let str = input;
+    while (str.length % 4 !== 0) {
+        str += '=';
+    }
+    return str;
+}
+
+const defaultSecret = base64url.decode(padBase64url(JWK_KEY));
+const SECRET_KEY = process.env.SECRET_KEY || defaultSecret;
+
+app.post('/create-jwt', (req, res) => {
+    const token = jwt.sign({
+        exp: Math.floor(Date.now() / 1000) + 3600,
+        iat: Math.floor(Date.now() / 1000),
+        iss: ISSUER
+    }, SECRET_KEY, { algorithm: 'HS256' });
+    
+    res.json({ code: 200, msg: "ok", data: { token } });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
+```
 - java 示例
+```
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+import java.util.Base64;
+import java.util.Date;
+import javax.crypto.SecretKey;
+
+@RestController
+public class JwtController {
+    
+    private static final String ISSUER = "httpbin.org";
+    private static final String JWK_KEY = "6fYeKzXqP2FKV9INaq62tGG5Ypc3hLQZzsao3ULosHGGFuECmnspfcZT6ran3KlKEMvo_eR7eohjzbdmuPe6A3k2CRW3ZEr8LKQtHjlNY-fmjWX6rcyiRX26U3bPfEmrQWmlOVghDaAqPw0AUg0HfjgAGQrXw4iuyxqOI37tNi9jpIxYdOiKjSmUQVJ6rHDeqRT9KL6-dd9BPZ2hvSw_iEqr_R568qPvZv8oz3TQSveeavHFkakFIXfRfhvueeA5uGWD3MzIuY6a81uqFZ1JiMIy__BNIrEVO1oaTSf1J0XxFnqm7NtYtNDS0uX6NVVRZ-EGquAM8lg6xwNPDfeBjA";
+    
+    private SecretKey getSecretKey() {
+        String envSecret = System.getenv("SECRET_KEY");
+        if (envSecret != null) {
+            return Keys.hmacShaKeyFor(envSecret.getBytes());
+        }
+        
+        String padded = JWK_KEY;
+        while (padded.length() % 4 != 0) {
+            padded += "=";
+        }
+        byte[] decoded = Base64.getUrlDecoder().decode(padded);
+        return Keys.hmacShaKeyFor(decoded);
+    }
+
+    @PostMapping("/create-jwt")
+    public ResponseEntity<Map<String, Object>> createJwt() {
+        long nowMillis = System.currentTimeMillis();
+        Date now = new Date(nowMillis);
+        
+        String token = Jwts.builder()
+                .setExpiration(new Date(nowMillis + 3600 * 1000))
+                .setIssuedAt(now)
+                .setIssuer(ISSUER)
+                .signWith(getSecretKey())
+                .compact();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("code", 200);
+        response.put("msg", "ok");
+        response.put("data", Collections.singletonMap("token", token));
+        
+        return ResponseEntity.ok(response);
+    }
+}
+```
 
 - golang 示例
+```
+package main
+
+import (
+	"encoding/base64"
+	"os"
+	"time"
+	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
+)
+
+const ISSUER = "httpbin.org"
+const JWK_KEY = "6fYeKzXqP2FKV9INaq62tGG5Ypc3hLQZzsao3ULosHGGFuECmnspfcZT6ran3KlKEMvo_eR7eohjzbdmuPe6A3k2CRW3ZEr8LKQtHjlNY-fmjWX6rcyiRX26U3bPfEmrQWmlOVghDaAqPw0AUg0HfjgAGQrXw4iuyxqOI37tNi9jpIxYdOiKjSmUQVJ6rHDeqRT9KL6-dd9BPZ2hvSw_iEqr_R568qPvZv8oz3TQSveeavHFkakFIXfRfhvueeA5uGWD3MzIuY6a81uqFZ1JiMIy__BNIrEVO1oaTSf1J0XxFnqm7NtYtNDS0uX6NVVRZ-EGquAM8lg6xwNPDfeBjA"
+
+func padBase64URL(s string) string {
+	for len(s)%4 != 0 {
+		s += "="
+	}
+	return s
+}
+
+func getSecretKey() []byte {
+	if envSecret := os.Getenv("SECRET_KEY"); envSecret != "" {
+		return []byte(envSecret)
+	}
+
+	padded := padBase64URL(JWK_KEY)
+	decoded, _ := base64.RawURLEncoding.DecodeString(padded)
+	return decoded
+}
+
+func main() {
+	r := gin.Default()
+
+	r.POST("/create-jwt", func(c *gin.Context) {
+		token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour)),
+			IssuedAt:  jwt.NewNumericDate(time.Now()),
+			Issuer:    ISSUER,
+		})
+
+		tokenString, _ := token.SignedString(getSecretKey())
+
+		c.JSON(200, gin.H{
+			"code": 200,
+			"msg":  "ok",
+			"data": gin.H{"token": tokenString},
+		})
+	})
+
+	r.Run(":8080")
+}
+```
 
 3. 在云原生 API 网关配置 jwt-auth 插件
    本示例 `jwt-auth` 插件的配置如下：
