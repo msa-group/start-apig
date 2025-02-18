@@ -1,0 +1,15 @@
+Description: 基于HMAC（Hash-based Message Authentication Code）算法的签名认证方式
+Version: 0.0.1
+Tags:
+  - 认证鉴权
+Name: hmac-auth-plugin
+Service:
+  API网关:
+    Authorities:
+      - AliyunAPIGFullAccess
+Parameters:
+  type: object
+  properties:
+    Icon: https://higress.io/img/higress_logo_small.png
+Project:
+  region: cn-hangzhou
