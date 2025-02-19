@@ -62,6 +62,7 @@ return jsonify(code=200, msg="ok", data={"token": token})
 ```
 
 - nodejs 示例
+
 ```
 const express = require('express');
 const jwt = require('jsonwebtoken');
@@ -90,7 +91,7 @@ app.post('/create-jwt', (req, res) => {
         iat: Math.floor(Date.now() / 1000),
         iss: ISSUER
     }, SECRET_KEY, { algorithm: 'HS256' });
-    
+
     res.json({ code: 200, msg: "ok", data: { token } });
 });
 
@@ -99,7 +100,9 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 ```
+
 - java 示例
+
 ```
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -111,16 +114,16 @@ import javax.crypto.SecretKey;
 
 @RestController
 public class JwtController {
-    
+
     private static final String ISSUER = "httpbin.org";
     private static final String JWK_KEY = "6fYeKzXqP2FKV9INaq62tGG5Ypc3hLQZzsao3ULosHGGFuECmnspfcZT6ran3KlKEMvo_eR7eohjzbdmuPe6A3k2CRW3ZEr8LKQtHjlNY-fmjWX6rcyiRX26U3bPfEmrQWmlOVghDaAqPw0AUg0HfjgAGQrXw4iuyxqOI37tNi9jpIxYdOiKjSmUQVJ6rHDeqRT9KL6-dd9BPZ2hvSw_iEqr_R568qPvZv8oz3TQSveeavHFkakFIXfRfhvueeA5uGWD3MzIuY6a81uqFZ1JiMIy__BNIrEVO1oaTSf1J0XxFnqm7NtYtNDS0uX6NVVRZ-EGquAM8lg6xwNPDfeBjA";
-    
+
     private SecretKey getSecretKey() {
         String envSecret = System.getenv("SECRET_KEY");
         if (envSecret != null) {
             return Keys.hmacShaKeyFor(envSecret.getBytes());
         }
-        
+
         String padded = JWK_KEY;
         while (padded.length() % 4 != 0) {
             padded += "=";
@@ -133,7 +136,7 @@ public class JwtController {
     public ResponseEntity<Map<String, Object>> createJwt() {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
-        
+
         String token = Jwts.builder()
                 .setExpiration(new Date(nowMillis + 3600 * 1000))
                 .setIssuedAt(now)
@@ -145,13 +148,14 @@ public class JwtController {
         response.put("code", 200);
         response.put("msg", "ok");
         response.put("data", Collections.singletonMap("token", token));
-        
+
         return ResponseEntity.ok(response);
     }
 }
 ```
 
 - golang 示例
+
 ```
 package main
 
@@ -254,7 +258,7 @@ curl -X POST 'http://env-cu9g82mm1hkui0vcv5eg-cn-hangzhou.alicloudapi.com/create
 
 ```
 {
-  "code": 200,
+  "code": 200,X-Mse-Consumer
   "data": {
     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Mzk4NDgxMDQsImlhdCI6MTczOTg0NDUwNCwiaXNzIjoiaHR0cGJpbi5vcmcifQ.IjedzubW-ROlBclWFwMaDixvR3N91-w7vnLbDspC4iI"
   },
@@ -267,11 +271,8 @@ curl -X POST 'http://env-cu9g82mm1hkui0vcv5eg-cn-hangzhou.alicloudapi.com/create
 3. 发起带鉴权 Header 的请求，在请求头中添加 Authorization：
 
 ```
-curl -iv -X GET 'http://env-cum46mum1hkh1e2psje0-cn-hangzhou.alicloudapi.com/jwt-test' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Mzk1MjYzMTUsImlhdCI6MTczOTUyMjcxNSwiaXNzIjoiaHR0cGJpbi5vcmcifQ.r1mxEOlgJTt06bU4VzvhAkpdO1UmIDq55IPTc5oYLLM'
+curl -iv -X GET 'http://env-cum46mum1hkh1e2psje0-cn-hangzhou.alicloudapi.com/robots.txt' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Mzk1MjYzMTUsImlhdCI6MTczOTUyMjcxNSwiaXNzIjoiaHR0cGJpbi5vcmcifQ.r1mxEOlgJTt06bU4VzvhAkpdO1UmIDq55IPTc5oYLLM'
 ```
 
 预期返回结果：
-
-```
-TODO
-```
+![Alt text](image-1.png)
