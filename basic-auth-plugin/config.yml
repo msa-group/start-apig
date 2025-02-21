@@ -6,7 +6,7 @@ SceneMetadata:
     zh-cn: "basic-auth 插件"
     en: "Basic Auth Plugin"
   Description:
-    zh-cn: "基于 HTTP Basic Auth 标准进行认证鉴权的功能"
+    zh-cn: "基于HTTP Basic Auth标准进行认证鉴权的功能"
     en: "Authentication function based on HTTP Basic Auth standard"
   Logo: "resources/icons/scence_logo.png"
 SceneProfiles:
