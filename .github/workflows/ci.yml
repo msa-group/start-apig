@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "**/description.yml"
 
 jobs:
   find-directories:
@@ -55,8 +53,9 @@ jobs:
     with:
       project: ${{ matrix.dir }}
     secrets:
-      ALIBABA_REGISTRY_V3_PUBLISH_TOKEN: ${{ secrets.ALIBABA_REGISTRY_V3_PUBLISH_TOKEN }}
+      FC_SERVICE: ${{ secrets.FC_SERVICE }}
       FC_SERVICE_URL: ${{ secrets.FC_SERVICE_URL }}
+      FC_TOKEN: ${{ secrets.FC_TOKEN }}
     strategy:
       matrix:
         dir: ${{ fromJson(needs.find-directories.outputs.directories) }}

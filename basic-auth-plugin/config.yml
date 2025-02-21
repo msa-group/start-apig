@@ -1,0 +1,23 @@
+Parameters:
+  Region: "cn-hangzhou"
+  Name: "basic-auth-plugin"
+SceneMetadata:
+  Name:
+    zh-cn: "basic-auth 插件"
+    en: "Basic Auth Plugin"
+  Description:
+    zh-cn: "基于 HTTP Basic Auth 标准进行认证鉴权的功能"
+    en: "Authentication function based on HTTP Basic Auth standard"
+  Logo: "resources/icons/scence_logo.png"
+SceneProfiles:
+  - DisplayName:
+      zh-cn: 单机版
+      en: Single Service
+    Template: "templates/msa.yaml"
+    Documentation:
+      zh-cn: "docs/zh-ch/index.md"
+    Parameters:
+      Backend:
+        Cpu: 1
+        Memory: 4096
+        Handler: index.handler
