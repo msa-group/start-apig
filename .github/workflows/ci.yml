@@ -29,9 +29,15 @@ jobs:
           DIRECTORIES=()
 
           for path in $MODIFIED_PATHS; do
-            if [[ $path == */description.yml ]]; then
-              DIRECTORY=$(dirname "$path")
-              [[ ! " ${DIRECTORIES[@]} " =~ " ${DIRECTORY} " ]] && DIRECTORIES+=("$DIRECTORY")
+
+            if [[ "$path" == .github/* ]]; then
+              echo "Ignoring .github path: $path"
+              continue
+            fi
+
+            ROOT_DIR=$(echo "$path" | cut -d'/' -f1)
+            if [[ ! " ${DIRECTORIES[@]} " =~ " ${ROOT_DIR} " ]]; then
+              DIRECTORIES+=("$ROOT_DIR")
             fi
           done
 
@@ -44,6 +50,8 @@ jobs:
             done
             json_array="${json_array%,}]"
           fi
+
+          echo "Generated JSON array: $json_array"
 
           echo "directories=$json_array" >> $GITHUB_OUTPUT
 
