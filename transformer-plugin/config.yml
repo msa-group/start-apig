@@ -1,0 +1,23 @@
+Parameters:
+  Region: "cn-hangzhou"
+  Name: "transformer-plugin"
+SceneMetadata:
+  Name:
+    zh-cn: "transformer 插件"
+    en: "Transformer"
+  Description:
+    zh-cn: "transformer 插件可以对请求/响应头、请求查询参数、请求/响应体参数进行转换，支持的转换操作类型包括删除、重命名、更新、添加、追加、映射、去重。"
+    en: "The transformer plug-in can transform request/response headers, request query parameters, and request/response body parameters, including delete, rename, update, add, append, map, and de-duplicate."
+  Logo: "resources/icons/scence_logo.png"
+SceneProfiles:
+  - DisplayName:
+      zh-cn: 单机版
+      en: Single Service
+    Template: "templates/msa.yml"
+    Documentation:
+      zh-cn: "docs/zh-ch/index.md"
+    Parameters:
+      Backend:
+        Cpu: 1
+        Memory: 4096
+        Handler: index.handler

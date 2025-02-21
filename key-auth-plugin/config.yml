@@ -1,0 +1,23 @@
+Parameters:
+  Region: "cn-hangzhou"
+  Name: "key-auth-plugin"
+SceneMetadata:
+  Name:
+    zh-cn: "key-auth 插件"
+    en: "Key Auth Plugin"
+  Description:
+    zh-cn: "key-auth插件实现了基于 API Key 进行认证鉴权的功能，支持从 HTTP 请求的 URL 参数或者请求头解析 API Key，同时验证该 API Key 是否有权限访问。"
+    en: "The key-Auth plug-in implements authentication based on API keys, parses API keys from URL parameters or request headers of HTTP requests, and verifies whether the API Key has access permission."
+  Logo: "resources/icons/scence_logo.png"
+SceneProfiles:
+  - DisplayName:
+      zh-cn: 单机版
+      en: Single Service
+    Template: "templates/msa.yaml"
+    Documentation:
+      zh-cn: "docs/zh-ch/index.md"
+    Parameters:
+      Backend:
+        Cpu: 1
+        Memory: 4096
+        Handler: index.handler

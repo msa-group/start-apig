@@ -1,0 +1,16 @@
+Parameters:
+  Region: "cn-hangzhou"
+  Name: "key-auth-plugin"
+  GatewayId: gw-cu9g7dem1hkn32ee70bg
+SceneProfiles:
+  - DisplayName:
+      zh-cn: 单机版
+      en: Single Service
+    Template: "templates/msa.yml"
+    Parameters:
+      HttpApi:
+        EnvironmentId: env-cu9g82mm1hkui0vcv5eg
+      Backend:
+        Cpu: 1
+        Memory: 4096
+        Handler: index.handler

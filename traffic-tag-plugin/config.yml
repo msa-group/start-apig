@@ -1,0 +1,23 @@
+Parameters:
+  Region: "cn-hangzhou"
+  Name: "traffic-tag-plugin"
+SceneMetadata:
+  Name:
+    zh-cn: "traffic-tag 插件"
+    en: "Traffic Tag Plugin"
+  Description:
+    zh-cn: "traffic-tag 插件允许根据权重或特定请求内容通过添加特定请求头的方式对请求流量进行染色。它支持复杂的逻辑来确定如何根据用户定义的标准染色流量。"
+    en: "The traffic-tag plug-in allows request traffic to be colored by adding specific request headers based on weight or specific request content. It supports complex logic to determine how to dye traffic according to user-defined criteria."
+  Logo: "resources/icons/scence_logo.png"
+SceneProfiles:
+  - DisplayName:
+      zh-cn: 单机版
+      en: Single Service
+    Template: "templates/msa.yml"
+    Documentation:
+      zh-cn: "docs/zh-ch/index.md"
+    Parameters:
+      Backend:
+        Cpu: 1
+        Memory: 4096
+        Handler: index.handler

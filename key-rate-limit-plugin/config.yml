@@ -1,13 +1,13 @@
 Parameters:
   Region: "cn-hangzhou"
-  Name: "basic-auth-plugin"
+  Name: "key-rate-limit-plugin"
 SceneMetadata:
   Name:
-    zh-cn: "basic-auth 插件"
-    en: "Basic Auth Plugin"
+    zh-cn: "key-rate-limit 插件"
+    en: "Key Rate Limit Plugin"
   Description:
-    zh-cn: "基于 HTTP Basic Auth 标准进行认证鉴权的功能"
-    en: "Authentication function based on HTTP Basic Auth standard"
+    zh-cn: "key-rate-limit插件实现了基于特定键值实现限流，键值来源可以是 URL 参数、HTTP 请求头"
+    en: "The key-rate-limit plugin implements traffic limiting based on specific key values, which can be URL parameters or HTTP request headers"
   Logo: "resources/icons/scence_logo.png"
 SceneProfiles:
   - DisplayName:

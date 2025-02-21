@@ -1,13 +1,13 @@
 Parameters:
   Region: "cn-hangzhou"
-  Name: "basic-auth-plugin"
+  Name: "bot-detect-plugin"
 SceneMetadata:
   Name:
-    zh-cn: "basic-auth 插件"
-    en: "Basic Auth Plugin"
+    zh-cn: "bot-detect 插件"
+    en: "Bot Detect Plugin"
   Description:
-    zh-cn: "基于 HTTP Basic Auth 标准进行认证鉴权的功能"
-    en: "Authentication function based on HTTP Basic Auth standard"
+    zh-cn: "bot-detect 插件可以用于识别并阻止互联网爬虫对站点资源的爬取"
+    en: "The bot-detect plug-in can be used to identify and prevent Web crawlers from crawling site resources"
   Logo: "resources/icons/scence_logo.png"
 SceneProfiles:
   - DisplayName:

@@ -1,0 +1,23 @@
+Parameters:
+  Region: "cn-hangzhou"
+  Name: "custom-response-plugin"
+SceneMetadata:
+  Name:
+    zh-cn: "custom-response 插件"
+    en: "Custom Response Plugin"
+  Description:
+    zh-cn: "支持配置自定义的响应，包括自定义 HTTP 应答状态码、HTTP 应答头，以及 HTTP 应答 Body。可以用于 Mock 响应，也可以用于判断特定状态码后给出自定义应答，例如在触发网关限流策略时实现自定义响应。"
+    en: "You can configure user-defined responses, including user-defined HTTP response status codes, HTTP response headers, and HTTP response bodies. It can be used for Mock responses, or it can be used to determine a specific status code and then give a custom response, such as a custom response when a gateway traffic limiting policy is triggered."
+  Logo: "resources/icons/scence_logo.png"
+SceneProfiles:
+  - DisplayName:
+      zh-cn: 单机版
+      en: Single Service
+    Template: "templates/msa.yml"
+    Documentation:
+      zh-cn: "docs/zh-ch/index.md"
+    Parameters:
+      Backend:
+        Cpu: 1
+        Memory: 4096
+        Handler: index.handler

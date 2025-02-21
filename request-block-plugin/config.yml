@@ -1,0 +1,23 @@
+Parameters:
+  Region: "cn-hangzhou"
+  Name: "request-block-plugin"
+SceneMetadata:
+  Name:
+    zh-cn: "request-block 插件"
+    en: "Request Block Plugin"
+  Description:
+    zh-cn: "request-block插件实现了基于 URL、请求头等特征屏蔽 HTTP 请求，可以用于防护部分站点资源不对外部暴露"
+    en: "The request-block plug-in shields HTTP requests based on urls, requests, and other features, and can be used to protect some site resources from external exposure"
+  Logo: "resources/icons/scence_logo.png"
+SceneProfiles:
+  - DisplayName:
+      zh-cn: 单机版
+      en: Single Service
+    Template: "templates/msa.yml"
+    Documentation:
+      zh-cn: "docs/zh-ch/index.md"
+    Parameters:
+      Backend:
+        Cpu: 1
+        Memory: 4096
+        Handler: index.handler
