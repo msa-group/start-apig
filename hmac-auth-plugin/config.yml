@@ -1,0 +1,23 @@
+Parameters:
+  Region: "cn-hangzhou"
+  Name: "hmac-auth-plugin"
+SceneMetadata:
+  Name:
+    zh-cn: "hmac-auth 插件"
+    en: "Hmac Auth Plugin"
+  Description:
+    zh-cn: "hmac-auth插件实现了基于 HMAC 算法为 HTTP 请求生成不可伪造的签名，并基于签名实现身份认证和鉴权"
+    en: "The HMAC-Auth plug-in generates unforgeable signatures for HTTP requests based on HMAC algorithm, and implements identity authentication and authentication based on signatures"
+  Logo: "resources/icons/scence_logo.png"
+SceneProfiles:
+  - DisplayName:
+      zh-cn: 单机版
+      en: Single Service
+    Template: "templates/msa.yml"
+    Documentation:
+      zh-cn: "docs/zh-cn/index.md"
+    Parameters:
+      Backend:
+        Cpu: 1
+        Memory: 4096
+        Handler: index.handler

@@ -13,7 +13,7 @@ SceneProfiles:
   - DisplayName:
       zh-cn: 单机版
       en: Single Service
-    Template: "templates/msa.yaml"
+    Template: "templates/msa.yml"
     Documentation:
       zh-cn: "docs/zh-cn/index.md"
     Parameters:

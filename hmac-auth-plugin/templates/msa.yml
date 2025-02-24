@@ -1,0 +1,47 @@
+Composer:
+  Backend:
+    Component: fc3
+    Parameters:
+      Name: {{Subfix(Parameters.Name)}}
+      CustomContainerConfig:
+        Fn::Sub:
+          - '{"Port": 80,"Image":"registry.${Region}.aliyuncs.com/oss-share/msa:httpbin", "RegistryConfig":{"CertConfig":{"Insecure":false}}}'
+          - Region: {{Parameters.Region}}
+  Service:
+    DependsOn: Backend
+    Component: apig.service
+    Parameters:
+      Name: {{Subfix(Parameters.Name)}}
+      Port: 80
+      DnsConfig:
+        AddressesName: {{RosOutputHostName(Backend.HttpTrigger, "UrlIntranet")}}
+        Name: {{Subfix(Join([Parameters.Name, '-','svc']))}}
+  HttpApi:
+    DependsOn:
+      - Service
+    Component: apig.http 
+    Parameters:
+      Name: {{Subfix(Join([Parameters.Name, '-','http']))}}
+      Routes:
+        - Name: {{Subfix(Parameters.Name)}}
+          Path:
+            Type: Prefix
+            Value: /
+          Scene: SingleService
+          Services:
+            - ServiceId: {{RosOutput(Service, "ServiceId")}}
+              Protocol: HTTP
+              Weight: 100
+          Plugins:
+            - PluginClassName: hmac-auth
+              PluginConfig: |
+                consumers:
+                  - key: appKey-example-1
+                    secret: appSecret-example-1
+                    name: consumer-1
+          Policies:
+            - PolicyClassName: "HttpRewrite"
+              PolicyConfig:
+                Fn::Sub:
+                  - '{"pathType":"Prefix","host":"${HOST}","enable":true}'
+                  - HOST: {{RosOutputHostName(Backend.HttpTrigger, "UrlIntranet")}}

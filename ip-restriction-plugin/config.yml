@@ -1,0 +1,23 @@
+Parameters:
+  Region: "cn-hangzhou"
+  Name: "ip-restriction-plugin"
+SceneMetadata:
+  Name:
+    zh-cn: "ip-restriction 插件"
+    en: "Ip Restriction Plugin"
+  Description:
+    zh-cn: "ip-restriction 插件可以通过将 IP 地址列入白名单或黑名单来限制对服务或路由的访问.支持对单个 IP 地址、多个 IP 地址和类似 10.10.10.0/24 的 CIDR范围的限制."
+    en: "Ip-restriction plug-ins can restrict access to services or routes by whitelisting or blacklisting IP addresses. Supports restrictions on single IP addresses, multiple IP addresses, and CIDR ranges like 10.10.10.0/24."
+  Logo: "resources/icons/scence_logo.png"
+SceneProfiles:
+  - DisplayName:
+      zh-cn: 单机版
+      en: Single Service
+    Template: "templates/msa.yml"
+    Documentation:
+      zh-cn: "docs/zh-cn/index.md"
+    Parameters:
+      Backend:
+        Cpu: 1
+        Memory: 4096
+        Handler: index.handler
