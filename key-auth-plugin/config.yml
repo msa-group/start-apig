@@ -15,7 +15,7 @@ SceneProfiles:
       en: Single Service
     Template: "templates/msa.yaml"
     Documentation:
-      zh-cn: "docs/zh-ch/index.md"
+      zh-cn: "docs/zh-cn/index.md"
     Parameters:
       Backend:
         Cpu: 1
