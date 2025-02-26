@@ -1,86 +1,61 @@
-Parameters:
-  GatewayId:
-    Type: String
-    Default: 'gw-cu9g7dem1hkn32ee70bg'
-  EnvironmentId:
-    Type: String
-    Default: 'env-cu9g82mm1hkui0vcv5eg'
-  Region:
-    Type: String
-    Default: 'cn-hangzhou'
-  Name:
-    Type: String
-    Default: 'jwt-plugin'
 Composer:
-  FcBackend:
+  Backend:
     Component: fc3
-    Properties:
-      Function:
-        CustomContainerConfig:
-          Fn::Sub:
-            - '{"Port": 80,"Image":"registry.${Region}.aliyuncs.com/oss-share/msa:httpbin", "RegistryConfig":{"CertConfig":{"Insecure":false}}}'
-            - Region: {{Parameters.Region}}
     Parameters:
       Name: {{Subfix(Parameters.Name)}}
+      CustomContainerConfig:
+        Fn::Sub:
+          - '{"Port": 80,"Image":"registry.${Region}.aliyuncs.com/oss-share/msa:httpbin", "RegistryConfig":{"CertConfig":{"Insecure":false}}}'
+          - Region: {{Parameters.Region}}
   Service:
-    DependsOn: FcBackend
+    DependsOn: Backend
     Component: apig.service
     Parameters:
+      Name: {{Subfix(Parameters.Name)}}
       Port: 80
-      AddressesName: {{RosOutputHostName(FcBackend.HttpTrigger, "UrlIntranet")}}
-      Name: {{Subfix(Join([Parameters.Name, '-','svc']))}}
-  RouteApi:
-    Component: apig.http.api
-    Parameters:
-      ApiName: {{Subfix(Join([Parameters.Name, '-','http']))}}
-  HttpRouteVerification:
+      DnsConfig:
+        AddressesName: {{RosOutputHostName(Backend.HttpTrigger, "UrlIntranet")}}
+        Name: {{Subfix(Join([Parameters.Name, '-','svc']))}}
+  HttpApi:
     DependsOn:
       - Service
-      - RouteApi
-    Component: apig.route
-    Operation:
-      ApiId: {{RosOutput(RouteApi, "HttpApiId")}}
-      Name: verification
-      Path: 'Prefix /jwt-test'
-      Scene: SingleService
-      Services:
-        - ServiceId: {{RosOutput(Service, "ServiceId")}}
-          Protocol: HTTP
-          Weight: 100
-  HttpRouteCreateAuth:
-    DependsOn:
-      - Service
-      - RouteApi
-    Component: apig.route
-    Operation:
-      ApiId: {{RosOutput(RouteApi, "HttpApiId")}}
-      Name: create-jwt
-      Path: 'Prefix /create-jwt'
-      Method: POST
-      Scene: SingleService
-      Services:
-        - ServiceId: {{RosOutput(Service, "ServiceId")}}
-          Protocol: HTTP
-          Weight: 100
-  KeyAuthPlugin:
-    DependsOn: HttpRouteVerification
-    Component: apig.router.plugin
+    Component: apig.http 
     Parameters:
-      PluginClassId: pls-cqebrgh4ckt6ppatmprr
-      RouteIds:
-        - {{RosOutput(HttpRouteVerification, "RouteId")}}
-      PluginConfig: |
-        consumers:
-        - name: test
-          issuer: httpbin.org
-          jwks: |
-            {
-              "keys": [
-                {
-                  "kty": "oct",
-                  "use": "sig",
-                  "k": "6fYeKzXqP2FKV9INaq62tGG5Ypc3hLQZzsao3ULosHGGFuECmnspfcZT6ran3KlKEMvo_eR7eohjzbdmuPe6A3k2CRW3ZEr8LKQtHjlNY-fmjWX6rcyiRX26U3bPfEmrQWmlOVghDaAqPw0AUg0HfjgAGQrXw4iuyxqOI37tNi9jpIxYdOiKjSmUQVJ6rHDeqRT9KL6-dd9BPZ2hvSw_iEqr_R568qPvZv8oz3TQSveeavHFkakFIXfRfhvueeA5uGWD3MzIuY6a81uqFZ1JiMIy__BNIrEVO1oaTSf1J0XxFnqm7NtYtNDS0uX6NVVRZ-EGquAM8lg6xwNPDfeBjA",
-                  "alg": "HS256"
-                }
-              ]
-            }
+      Name: {{Subfix(Join([Parameters.Name, '-','http']))}}
+      Routes:
+        - Name: verification
+          Path:
+            Type: Prefix
+            Value: /jwt-test
+          Scene: SingleService
+          Services:
+            - ServiceId: {{RosOutput(Service, "ServiceId")}}
+              Protocol: HTTP
+              Weight: 100
+          Plugins:
+            - PluginClassName: jwt-auth
+              PluginConfig: |
+                  consumers:
+                  - name: test
+                    issuer: httpbin.org
+                    jwks: |
+                      {
+                        "keys": [
+                          {
+                            "kty": "oct",
+                            "use": "sig",
+                            "k": "6fYeKzXqP2FKV9INaq62tGG5Ypc3hLQZzsao3ULosHGGFuECmnspfcZT6ran3KlKEMvo_eR7eohjzbdmuPe6A3k2CRW3ZEr8LKQtHjlNY-fmjWX6rcyiRX26U3bPfEmrQWmlOVghDaAqPw0AUg0HfjgAGQrXw4iuyxqOI37tNi9jpIxYdOiKjSmUQVJ6rHDeqRT9KL6-dd9BPZ2hvSw_iEqr_R568qPvZv8oz3TQSveeavHFkakFIXfRfhvueeA5uGWD3MzIuY6a81uqFZ1JiMIy__BNIrEVO1oaTSf1J0XxFnqm7NtYtNDS0uX6NVVRZ-EGquAM8lg6xwNPDfeBjA",
+                            "alg": "HS256"
+                          }
+                        ]
+                      }
+        - Name: create-jwt
+          Path:
+            Type: Prefix
+            Value: /create-jwt
+          Scene: SingleService
+          Services:
+            - ServiceId: {{RosOutput(Service, "ServiceId")}}
+              Protocol: HTTP
+              Weight: 100
+        
