@@ -12,10 +12,7 @@ Composer:
     Component: apig.service
     Parameters:
       Name: {{Subfix(Parameters.Name)}}
-      Port: 80
-      DnsConfig:
-        AddressesName: {{RosOutputHostName(Backend.HttpTrigger, "UrlIntranet")}}
-        Name: {{Subfix(Join([Parameters.Name, '-','svc']))}}
+      SourceType: FC3
   HttpApi:
     DependsOn:
       - Service
@@ -40,9 +37,3 @@ Composer:
                 deny:
                   - 10.0.0.1
                   - 192.169.0.0/16
-          Policies:
-            - PolicyClassName: "HttpRewrite"
-              PolicyConfig:
-                Fn::Sub:
-                  - '{"pathType":"Prefix","host":"${HOST}","enable":true}'
-                  - HOST: {{RosOutputHostName(Backend.HttpTrigger, "UrlIntranet")}}
