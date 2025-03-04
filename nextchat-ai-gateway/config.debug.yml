@@ -1,6 +1,4 @@
-Parameters: 
-  GatewayId: 'gw-cu9g7dem1hkn32ee70bg'
-  EnvironmentId: 'env-cu9g82mm1hkui0vcv5eg'
+Parameters:
   Region: 'cn-hangzhou'
   Name: 'nextchat-web'
 
@@ -19,6 +17,9 @@ SceneProfiles:
       en: Single Service
     Template: "templates/msa.yml"
     Parameters:
+      HttpApi:
+        GatewayId: gw-cu9g7dem1hkn32ee70bg
+        EnvironmentId: env-cu9g82mm1hkui0vcv5eg
       Backend:
         Cpu: 1
         Memory: 4096
