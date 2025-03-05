@@ -1,0 +1,9 @@
+Parameters:
+  HttpApi:
+    Type: String
+    Label:
+      zh-cn: API名称
+      en: API Name
+    AssociationProperty: ALIYUN::APIG::API
+    AssociationPropertyMetadata:
+      Type: HTTP

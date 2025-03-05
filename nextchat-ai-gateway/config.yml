@@ -15,6 +15,8 @@ SceneProfiles:
   - DisplayName:
       zh-cn: 单机版
       en: Single Service
+    Spec:
+      HttpApi: "templates/apig.http.spec.yml"
     Template: "templates/msa.yml"
     Parameters:
       HttpApi:
