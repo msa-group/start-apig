@@ -35,4 +35,4 @@ A[fa:fa-users http 请求] --> B{fa:fa-route 网关路由}
 ```
 ## 部署
 
-## usage
+## 使用
