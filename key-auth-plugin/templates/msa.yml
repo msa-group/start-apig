@@ -1,5 +1,6 @@
 Composer:
   Backend:
+    Existed: {{IsNotEmpty(Get(Parameters, "Service.ServiceId"))}}
     Component: fc3
     Parameters:
       Name: {{Subfix(Parameters.Name)}}
@@ -9,6 +10,7 @@ Composer:
           - Region: {{Parameters.Region}}
   Service:
     DependsOn: Backend
+    Existed: {{IsNotEmpty(Get(Parameters, "Service.ServiceId"))}}
     Component: apig.service
     Parameters:
       Name: {{Subfix(Parameters.Name)}}
@@ -16,7 +18,7 @@ Composer:
   HttpApi:
     DependsOn:
       - Service
-    Component: apig.http 
+    Component: apig.http
     Parameters:
       Name: {{Subfix(Join([Parameters.Name, '-','http']))}}
       Routes:
@@ -26,7 +28,7 @@ Composer:
             Value: /
           Scene: SingleService
           Services:
-            - ServiceId: {{RosOutput(Service, "ServiceId")}}
+            - ServiceId: {{RosOutput(Service, "ServiceId", Get(Parameters, "Service.ServiceId"))}}
               Protocol: HTTP
               Weight: 100
           Plugins:
