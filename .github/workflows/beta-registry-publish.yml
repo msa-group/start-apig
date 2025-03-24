@@ -43,12 +43,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y git make jq curl wget
-      - name: Generate README
-        run: |
-          npx msa-tool generate -u ${{ secrets.FC_SERVICE_URL }}
-        env:
-          GITHUB_SHA: ${{ github.sha }}
-          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+      # - name: Generate README
+      #   run: |
+      #     npx msa-tool generate -u ${{ secrets.FC_SERVICE_URL }}
+      #   env:
+      #     GITHUB_SHA: ${{ github.sha }}
+      #     GITHUB_EVENT_BEFORE: ${{ github.event.before }}
       - name: Zip Files
         run: |
           zip -r "$(basename "$PWD").zip" . -x ".github/*"
