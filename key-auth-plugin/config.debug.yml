@@ -6,6 +6,9 @@ SceneProfiles:
       zh-cn: 单机版
       en: Single Service
     Template: "templates/msa.yml"
+    Spec:
+      HttpApi: "templates/apig.http.spec.yml"
+      Backend: "templates/fc.spec.yml"
     Parameters:
       HttpApi:
         GatewayId: gw-cu9g7dem1hkn32ee70bg

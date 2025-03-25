@@ -3,7 +3,10 @@ Composer:
     Existed: {{IsNotEmpty(Get(Parameters, "Service.ServiceId"))}}
     Component: fc3
     Parameters:
-      Name: {{Subfix(Parameters.Name)}}
+      Name: {{Get(Parameters, "Backend.Name") || Subfix(Parameters.Name)}}
+      Cpu: {{Get(Parameters, "Backend.Cpu") || 1}}
+      Memory: {{Get(Parameters, "Backend.Memory") || 1024}}
+      EnvironmentVariables: {{Get(Parameters, "Backend.Env")}}
       CustomContainerConfig:
         Fn::Sub:
           - '{"Port": 80,"Image":"registry.${Region}.aliyuncs.com/oss-share/msa:httpbin", "RegistryConfig":{"CertConfig":{"Insecure":false}}}'
@@ -13,14 +16,14 @@ Composer:
     Existed: {{IsNotEmpty(Get(Parameters, "Service.ServiceId"))}}
     Component: apig.service
     Parameters:
-      Name: {{Subfix(Parameters.Name)}}
+      Name: {{Get(Parameters, "Service.Name") || Subfix(Parameters.Name)}}
       SourceType: FC3
   HttpApi:
     DependsOn:
       - Service
     Component: apig.http
     Parameters:
-      Name: {{Subfix(Join([Parameters.Name, '-','http']))}}
+      Name: {{Get(Parameters, "HttpApi.Name") || Subfix(Join([Parameters.Name, '-','http']))}}
       Routes:
         - Name: {{Subfix(Parameters.Name)}}
           Path:

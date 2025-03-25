@@ -1,0 +1,29 @@
+Parameters:
+  Name:
+    Required: true
+    Type: String
+    Label:
+      zh-cn: API 名称
+      en: API Name
+    Component: Input
+  Cpu:
+    Required: true
+    Type: String
+    Label:
+      zh-cn:  Cpu
+      en: Cpu
+    Component: Input
+  Memory:
+    Required: true
+    Type: String
+    Label:
+      zh-cn: 内存
+      en: Memory
+    Component: Input
+  Env:
+    Required: true
+    Type: String
+    Label:
+      zh-cn: 环境变量
+      en: API Name
+    Component: Input

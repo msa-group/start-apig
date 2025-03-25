@@ -1,0 +1,19 @@
+Parameters:
+  Name:
+    Required: true
+    Type: String
+    Description:
+      zh-cn: 以路由为核心的HTTP接口
+    Label:
+      zh-cn: API名称
+      en: API Name
+    Component: Input
+  Env:
+    Required: true
+    Type: String
+    Description:
+      zh-cn: 以路由为核心的HTTP接口
+    Label:
+      zh-cn: 环境变量
+      en: API Name
+    Component: Input
