@@ -17,6 +17,7 @@ Composer:
   Service:
     DependsOn: Backend
     Component: apig.service
+    Ref: Backend
     Parameters:
       Name: {{Default(Get(Parameters, 'Service.Name'), Subfix(Parameters.Name))}}
       SourceType: FC3
