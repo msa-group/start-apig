@@ -1,15 +1,14 @@
 
 Composer:
   Backend:
-    Component: fc3
+    Existed: {{IsNotEmpty(Get(Parameters, "Service.ServiceId"))}}
+    Component: cs.application
     Parameters:
-      Name: {{Default(Get(Parameters, 'Backend.Name'), Subfix(Parameters.Name))}}
-      CustomContainerConfig:
-        Fn::Sub:
-          - '{"Port": 3000,"Image":"registry.${Region}.aliyuncs.com/oss-share/msa:chatgpt-next-web-v2", "RegistryConfig":{"CertConfig":{"Insecure":false}}}'
-          - Region: {{Parameters.Region}}
-      EnvironmentVariables: '{"CUSTOM_MODELS":"-all,+gpt-3.5-turbo@OpenAI,+gpt-4o@OpenAI,+gpt-4@OpenAI,+gpt-4-turbo@OpenAI,+qwen-max@OpenAI,+qwen-turbo@OpenAI,+qwen-plus@OpenAI", "OPENAI_API_KEY": "unused", "DEFAULT_MODEL":"qwen-max"}'
-      Timeout: 60
+      AppName: {{Get(Parameters, "Backend.Name")}}
+      ClusterId: {{Get(Parameters, "Backend.ClusterId")}}
+      Namespace: {{Get(Parameters, "Backend.Namespace")}}
+      YamlContent: {{Indent(Get(Parameters, "Service.YamlContent"), 5)}}
+
   Service:
     DependsOn: Backend
     Component: apig.service

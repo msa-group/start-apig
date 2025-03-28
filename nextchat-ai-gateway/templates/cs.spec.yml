@@ -1,0 +1,44 @@
+Parameters:
+  ImportType:
+    Type: String
+    Label:
+      Zh-cn: 服务导入方式
+      En: ImportType
+    Required: true
+    Component: Radio
+    ComponentProps: 
+      DataSource: 
+        - Label: 新建
+          Value: create
+        - Label: 使用已有
+          Value: useExist
+      DefaultValue: create
+  ServiceId:
+    Label:
+      Zh-cn: 服务 ID
+      En: Service ID
+    Required: true
+    Component: Component::APIG::Services
+    Visible: 
+      WatchField: ImportType
+      Condition: (value) => value === 'useExist'
+          
+  ClusterId:
+    # Action: Action::APIG::EnsureK8sSource
+    Label:
+      Zh-cn: ACK/ACK Serviceless 集群
+      En: ACK/ACK Serviceless Cluster
+    Required: true
+    Component: Component::APIG::K8sInstances
+    Visible: 
+      WatchField: ImportType
+      Condition: (value) => value === 'create'
+  YamlContent:
+    Type: String
+    Label:
+      Zh-cn: 配置项
+      En: ConfigKey
+    Component: Input
+    Visible: 
+      WatchField: ImportType
+      Condition: (value) => value === 'create'
