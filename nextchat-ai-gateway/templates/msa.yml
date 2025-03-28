@@ -24,7 +24,7 @@ Composer:
   LLMSvc:
     Component: apig.service
     Parameters:
-      Name: {{Default(Get(Parameters, 'LLMSvc.Name'), Subfix('dashscope-svc'))}}
+      Name: {{Default(Get(Parameters, 'LLMSvc.Name'), Subfix(Join([Parameters.Name, '-', 'dashscope'])))}}
       DnsConfig:
         AddressesName: dashscope.aliyuncs.com
         Port: 443
