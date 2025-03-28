@@ -20,6 +20,7 @@ SceneProfiles:
       HttpApi: "templates/apig.http.spec.yml"
       Service: "templates/apig.service.spec.yml"
       LLMSvc: "templates/apig.service.spec.yml"
+
     Template: "templates/msa.yml"
     Parameters:
       Backend:
