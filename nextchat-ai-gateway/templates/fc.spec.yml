@@ -1,0 +1,16 @@
+Parameters:
+  Name:
+    Label:
+      zh-cn: 名称
+      en: Name
+    Component: "Input"
+  MemorySize:
+    Label:
+      zh-cn: 内存
+      en: Memory Size
+    Component: "Input"
+  Cpu:  
+    Label:
+      zh-cn: Cpu
+      en: Cpu
+    Component: "Input"

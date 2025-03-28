@@ -2,6 +2,7 @@ Parameters:
   Region: 'cn-hangzhou'
   Name: 'nextchat-web'
   GatewayId: gw-cvcpbhum1hkhtugt3hm0
+  EnvironmentId: env-cvcpc16m1hkljh0j5p3g
 SceneMetadata:
   Name:
     zh-cn: "AI 网关驱动企业级 ChatGPT-Next-Web"
@@ -17,7 +18,10 @@ SceneProfiles:
       en: Single Service
     Template: "templates/msa.yml"
     Spec:
-      Service: "templates/cs.spec.yml"
+      Backend: "templates/fc.spec.yml"
+      HttpApi: "templates/apig.http.spec.yml"
+      Service: "templates/apig.service.spec.yml"
+      LLMSvc: "templates/apig.service.spec.yml"
     Parameters:
       Backend:
         Cpu: 1

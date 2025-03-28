@@ -1,0 +1,14 @@
+Parameters:
+  Name:
+    Component: "Input"
+    Label:
+      zh-cn: API名称
+      en: API Name
+  RouterName0:
+    Component: "Input"
+    Label:
+      zh-cn: 路由名称
+  RouterName1:
+    Component: "Input"
+    Label:
+      zh-cn: 路由名称

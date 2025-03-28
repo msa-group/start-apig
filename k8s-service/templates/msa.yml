@@ -1,0 +1,17 @@
+Composer:
+  Backend:
+    Existed: {{IsNotEmpty(Get(Parameters, "Service.ServiceId"))}}
+    Component: cs.application
+    Parameters:
+      AppName: {{Get(Parameters, "Backend.Name")}}
+      ClusterId: {{Get(Parameters, "Backend.ClusterId")}}
+      Namespace: {{Get(Parameters, "Backend.Namespace")}}
+      YamlContent: {{Indent(Get(Parameters, "Service.YamlContent"), 5)}}
+     
+  Service:
+    DependsOn: Backend
+    Existed: {{IsNotEmpty(Get(Parameters, "Service.ServiceId"))}}
+    Component: apig.service
+    Parameters:
+      Name: {{Get(Parameters, "Service.Name") || Subfix(Parameters.Name)}}
+      SourceType: K8S

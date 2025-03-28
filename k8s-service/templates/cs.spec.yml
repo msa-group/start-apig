@@ -24,7 +24,7 @@ Parameters:
       Condition: (value) => value === 'useExist'
           
   ClusterId:
-    # Action: Action::APIG::EnsureK8sSource
+    Action: Action::APIG::EnsureK8sSource
     Label:
       Zh-cn: ACK/ACK Serviceless 集群
       En: ACK/ACK Serviceless Cluster
