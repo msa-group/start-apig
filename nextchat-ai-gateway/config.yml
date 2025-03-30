@@ -19,7 +19,6 @@ SceneProfiles:
       Backend: "templates/fc.spec.yml"
       HttpApi.Routes[0]: "templates/apig.http.spec.yml"
       HttpApi.Routes[1]: "templates/apig.http.spec.yml"
-      Service: "templates/apig.service.spec.yml"
       LLMSvc: "templates/apig.service.spec.yml"
 
     Template: "templates/msa.yml"
