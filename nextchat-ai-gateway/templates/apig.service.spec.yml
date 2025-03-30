@@ -1,6 +1,0 @@
-Parameters:
-  Name:
-    Component: "Input"
-    Label:
-      zh-cn: 名称
-      en: API Name
