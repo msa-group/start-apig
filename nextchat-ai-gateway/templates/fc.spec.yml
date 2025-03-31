@@ -4,7 +4,7 @@ Parameters:
       zh-cn: 名称
       en: Name
     Component: "Input"
-  MemorySize:
+  Memory:
     Label:
       zh-cn: 内存
       en: Memory Size
