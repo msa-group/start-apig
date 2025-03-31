@@ -38,7 +38,7 @@ Parameters:
     Label:
       Zh-cn: 配置项
       En: ConfigKey
-    Component: Input
+    Component: Textarea
     Visible: 
       WatchField: ImportType
       Condition: (value) => value === 'create'
