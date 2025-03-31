@@ -17,8 +17,8 @@ SceneProfiles:
       en: Single Service
     Spec:
       Backend: "templates/fc.spec.yml"
+      HttpApi: "templates/apig.http.spec.yml"
       LLMSvc: "templates/apig.service.spec.yml"
-
     Template: "templates/msa.yml"
     Parameters:
       Backend:
