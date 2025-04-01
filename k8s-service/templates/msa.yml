@@ -3,9 +3,9 @@ Composer:
     Existed: {{IsNotEmpty(Get(Parameters, "Service.ServiceId"))}}
     Component: cs.application
     Parameters:
-      AppName: {{Get(Parameters, "Backend.Name")}}
-      ClusterId: {{Get(Parameters, "Backend.ClusterId")}}
-      Namespace: {{Get(Parameters, "Backend.Namespace")}}
+      AppName: {{Get(Parameters, "Service.Name")}}
+      ClusterId: {{Get(Parameters, "Service.ClusterId")}}
+      Namespace: {{Get(Parameters, "Service.Namespace")}}
       YamlContent: {{Indent(Get(Parameters, "Service.YamlContent"), 5)}}
      
   Service:
