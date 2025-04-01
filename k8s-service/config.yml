@@ -1,0 +1,10 @@
+Parameters:
+  Region: "cn-hangzhou"
+  Name: "k8s-service"
+SceneProfiles:
+  - DisplayName:
+      zh-cn: 单机版
+      en: Single Service
+    Template: "templates/msa.yml"
+    Spec:
+      Service: "templates/cs.spec.yml"
