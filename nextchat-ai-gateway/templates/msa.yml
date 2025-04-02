@@ -37,8 +37,8 @@ Composer:
       Routes:
         - Name: {{Default(Get(Parameters, 'HttpApi.RouterName0'), 'index')}}
           Path: 
-            Type: Prefix
-            Value: '/'
+            Type: {{Default(Get(Parameters, 'HttpApi.RouterPathType0'), 'Prefix')}}
+            Value: {{Default(Get(Parameters, 'HttpApi.RouterPathValue0'), '/')}}
           Scene: SingleService
           Services:
             - ServiceId: {{RosOutput(Service, "ServiceId")}}
@@ -46,8 +46,8 @@ Composer:
               Weight: 100
         - Name: {{Default(Get(Parameters, 'HttpApi.RouterName1'), 'dashscope')}}
           Path: 
-            Type: Prefix
-            Value: '/v1'
+            Type: {{Default(Get(Parameters, 'HttpApi.RouterPathType1'), 'Prefix')}}
+            Value: {{Default(Get(Parameters, 'HttpApi.RouterPathValue1'), '/v1')}}
           Methods:
             - POST
           Scene: SingleService
