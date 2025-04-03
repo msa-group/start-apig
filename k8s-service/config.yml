@@ -1,6 +1,11 @@
 Parameters:
   Region: "cn-hangzhou"
   Name: "k8s-service"
+SceneMetadata:
+  Name:
+    zh-cn: 'K8s 服务'
+  Description:
+    zh-cn: '通过云原生网关对外提供 K8s 服务'
 SceneProfiles:
   - DisplayName:
       zh-cn: 单机版
