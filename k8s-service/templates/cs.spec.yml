@@ -19,6 +19,8 @@ Parameters:
       En: Service ID
     Required: true
     Component: Component::APIG::Services
+    ComponentProps:
+      ShowRefresh: true
     Visible: 
       WatchField: ImportType
       Condition: (value) => value === 'useExist'
@@ -30,6 +32,8 @@ Parameters:
       En: ACK/ACK Serviceless Cluster
     Required: true
     Component: Component::APIG::K8sInstances
+    ComponentProps:
+      ShowRefresh: true
     Visible: 
       WatchField: ImportType
       Condition: (value) => value === 'create'
