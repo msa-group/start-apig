@@ -35,19 +35,19 @@ Composer:
     Parameters:
       Name: {{Default(Get(Parameters, 'HttpApi.Name'), Subfix(Join([Parameters.Name, 'http'])))}}
       Routes:
-        - Name: {{Default(Get(Parameters, 'HttpApi.RouterName0'), 'index')}}
+        - Name: {{Default(Get(Parameters, 'HttpApi.Router[0].RouterName'), 'index')}}
           Path: 
-            Type: {{Default(Get(Parameters, 'HttpApi.RouterPathType0'), 'Prefix')}}
-            Value: {{Default(Get(Parameters, 'HttpApi.RouterPathValue0'), '/')}}
+            Type: {{Default(Get(Parameters, 'HttpApi.Router[0].RouterPathType'), 'Prefix')}}
+            Value: {{Default(Get(Parameters, 'HttpApi.Router[0].RouterPathValue'), '/')}}
           Scene: SingleService
           Services:
             - ServiceId: {{RosOutput(Service, "ServiceId")}}
               Protocol: HTTP
               Weight: 100
-        - Name: {{Default(Get(Parameters, 'HttpApi.RouterName1'), 'dashscope')}}
+        - Name: {{Default(Get(Parameters, 'HttpApi.Router[1].RouterName'), 'dashscope')}}
           Path: 
-            Type: {{Default(Get(Parameters, 'HttpApi.RouterPathType1'), 'Prefix')}}
-            Value: {{Default(Get(Parameters, 'HttpApi.RouterPathValue1'), '/v1')}}
+            Type: {{Default(Get(Parameters, 'HttpApi.Router[1].RouterPathType'), 'Prefix')}}
+            Value: {{Default(Get(Parameters, 'HttpApi.Router[1].RouterPathValue'), '/v1')}}
           Methods:
             - POST
           Scene: SingleService
@@ -56,12 +56,6 @@ Composer:
               Protocol: HTTP
               Weight: 100
           Plugins:
-            - PluginClassId: pls-cqebrgh4ckt6ppatmprh
-              PluginConfig: |
-                provider:
-                  modelMapping:
-                    '*': qwen-max
-                  type: qwen
-                  apiTokens:
-                    - sk-xxx
+            - PluginClassId: {{Default(Get(Parameters, 'HttpApi.Router[1].Plugins[0].PluginClassId'), 'pls-cqebrgh4ckt6ppatmprh')}}
+              PluginConfig: {{Default(Get(Parameters, 'HttpApi.Router[1].Plugins[0].PluginConfig'), '')}}
        
