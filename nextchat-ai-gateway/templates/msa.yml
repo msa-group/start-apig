@@ -57,5 +57,5 @@ Composer:
               Weight: 100
           Plugins:
             - PluginClassId: {{Default(Get(Parameters, 'HttpApi.Router[1].Plugins[0].PluginClassId'), 'pls-cqebrgh4ckt6ppatmprh')}}
-              PluginConfig: {{Default(Get(Parameters, 'HttpApi.Router[1].Plugins[0].PluginConfig'), '')}}
+              PluginConfig: {{Default(Get(Parameters, 'HttpApi.Router[1].Plugins[0].PluginConfig'), "provider:\n  modelMapping:\n    '*': qwen-max\n    type: qwen\n")}}
        

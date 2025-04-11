@@ -33,11 +33,6 @@ SceneProfiles:
             RouterPathValue: /v1
             Plugins:
               - PluginClassId: pls-cqebrgh4ckt6ppatmprh
-                PluginConfig: |
-                  provider:
-                    modelMapping:
-                      '*': qwen-max
-                      type: qwen
       Backend:
         Cpu: 1
         Memory: 4096
