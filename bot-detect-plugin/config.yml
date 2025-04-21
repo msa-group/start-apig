@@ -21,3 +21,9 @@ SceneProfiles:
         Cpu: 1
         Memory: 4096
         Handler: index.handler
+    TestCase:
+      Method: "GET"
+      Path: "/get"
+      Header:
+        User-Agent: spd-tools
+
