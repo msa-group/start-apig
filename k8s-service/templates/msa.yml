@@ -25,8 +25,8 @@ Composer:
       Routes:
         - Name: {{Get(Parameters, 'HttpApi.Router[0].RouterName', Subfix(Parameters.Name))}}
           Path:
-            Type: Prefix
-            Value: /
+            Type: {{Default(Get(Parameters, 'HttpApi.Router[0].RouterPathType'), 'Prefix')}}
+            Value: {{Default(Get(Parameters, 'HttpApi.Router[0].RouterPathValue'), '/')}}
           Scene: SingleService
           Services:
             - ServiceId: {{RosOutput(Service, "ServiceId", Get(Parameters, "Service.ServiceId"))}}
