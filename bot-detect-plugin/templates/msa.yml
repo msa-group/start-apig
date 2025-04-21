@@ -20,7 +20,7 @@ Composer:
     Parameters:
       Name: {{Subfix(Join([Parameters.Name, '-','http']))}}
       Routes:
-        - Name: {{Subfix(Parameters.Name)}}
+        - Name: {{Get(Parameters, 'HttpApi.Router[0].RouterName', Subfix(Parameters.Name))}}
           Path:
             Type: Prefix
             Value: /
@@ -30,8 +30,5 @@ Composer:
               Protocol: HTTP
               Weight: 100
           Plugins:
-            - PluginClassName: bot-detect
-              PluginConfig: |
-                deny:
-                  - "spd-tools.*"
-                blocked_message: '禁止访问'
+            - PluginClassId: {{Default(Get(Parameters, 'HttpApi.Router[0].Plugins[0].PluginClassId'), 'pls-cqebrgh4ckt6ppatmpre')}} 
+              PluginConfig: {{Default(Get(Parameters, 'HttpApi.Router[0].Plugins[0].PluginConfig'), "deny:\n  - 'spd-tools.*'\nblocked_message: '禁止访问'\n")}}
